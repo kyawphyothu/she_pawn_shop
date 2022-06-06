@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-06-06T17:45:44.662Z" agent="5.0 (X11)" etag="nTsA2J8_Cl1By5SN-sVN" version="19.0.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-06-06T18:36:19.807Z" agent="5.0 (X11)" etag="opWUGZXhgZKqPrVPuYOJ" version="19.0.0" type="github">
   <diagram id="MfdhKl_LMUNg4a0uSqgR" name="Page-1">
-    <mxGraphModel dx="821" dy="827" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1802" dy="827" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -49,7 +49,7 @@
         <mxCell id="osRg2jaf1iDrFzfn_eNz-15" value="interests" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#21C0A5;strokeColor=#006658;fontColor=#5C5C5C;" parent="1" vertex="1">
           <mxGeometry x="630" y="280" width="220" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="osRg2jaf1iDrFzfn_eNz-16" value="+id int auto_increment primary key&#xa;+order_id int&#xa;+detail longtext&#xa;+interest_pay_date timestamp" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontColor=#5C5C5C;rounded=1;" parent="osRg2jaf1iDrFzfn_eNz-15" vertex="1">
+        <mxCell id="osRg2jaf1iDrFzfn_eNz-16" value="+id int auto_increment primary key&#xa;+order_id int&#xa;+original_price&#xa;+interest_price&#xa;+interest_pay_date timestamp default current_timestamp" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontColor=#5C5C5C;rounded=1;" parent="osRg2jaf1iDrFzfn_eNz-15" vertex="1">
           <mxGeometry y="30" width="220" height="90" as="geometry" />
         </mxCell>
         <mxCell id="osRg2jaf1iDrFzfn_eNz-19" value="pawn" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#21C0A5;strokeColor=#006658;fontColor=#5C5C5C;" parent="1" vertex="1">
@@ -73,7 +73,7 @@
         <mxCell id="T3vM8OxbV8jhyGD27cbX-38" value="htet yu" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#21C0A5;strokeColor=#006658;fontColor=#5C5C5C;" parent="1" vertex="1">
           <mxGeometry x="610" y="440" width="280" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="T3vM8OxbV8jhyGD27cbX-39" value="+id&#xa;+order_id&#xa;+value int&#xa;+created_at timestamp default current_timestamp&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontColor=#5C5C5C;rounded=1;" parent="T3vM8OxbV8jhyGD27cbX-38" vertex="1">
+        <mxCell id="T3vM8OxbV8jhyGD27cbX-39" value="+id&#xa;+order_id&#xa;+price int&#xa;+created_at timestamp default current_timestamp&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;fontColor=#5C5C5C;rounded=1;" parent="T3vM8OxbV8jhyGD27cbX-38" vertex="1">
           <mxGeometry y="30" width="280" height="90" as="geometry" />
         </mxCell>
         <mxCell id="T3vM8OxbV8jhyGD27cbX-48" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#006658;fontColor=#5C5C5C;curved=1;" parent="1" source="osRg2jaf1iDrFzfn_eNz-6" target="T3vM8OxbV8jhyGD27cbX-39" edge="1">
