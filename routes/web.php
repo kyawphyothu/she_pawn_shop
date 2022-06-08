@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrdersController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +23,21 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//test
+Route::get('/test', function () {
+    return view('pawn.index');
+});
+
+//index
+Route::get('/', [OrderController::class, 'index']);
+
+//add order
+Route::get('/orders/add', [OrderController::class, 'add']);
+Route::post('/orders/add', [OrderController::class, 'create']);
+
+//search by name
+Route::post('orders/search', [OrderController::class, 'searchByName']);
+
+//detail page
+Route::get('/orders/detail', [OrderController::class, 'detail']);
