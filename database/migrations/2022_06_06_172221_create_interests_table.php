@@ -17,10 +17,13 @@ return new class extends Migration
         Schema::create('interests', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
-            $table->integer('original_price');
-            $table->integer('interest_price');
-            // $table->timestamp('interest_pay_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamps();
+            $table->string('name');
+            $table->integer('total_price');
+            $table->integer('total_interest_price');
+            $table->integer('paid_interest_price');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            // $table->timestamps();
         });
     }
 

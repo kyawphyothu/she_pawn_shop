@@ -3,6 +3,11 @@
 @section('content')
     <div class="container w-100">
         <div class="row">
+            @if (session('info'))
+                <div class=" alert alert-info">
+                    {{ session('info') }}
+                </div>
+            @endif
             <div class=" col-9">
                 {{-- SEARCH --}}
                 <form action="/orders/search" method="POST" class="mb-1">
@@ -26,36 +31,45 @@
                 </ul>
                 {{-- contents --}}
                 <div class="row ">
-                    @foreach ($allOrders as $allOrder)
+                    @foreach ($orders as $order)
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column mb-4">
-                            <div class="card d-flex flex-fill">
+                            <div class="card d-flex flex-fill"
+                                @if ($order->pawn_id == 2) style="background-color: #d5d4d4bd;" @endif>
                                 <div class="card-body">
                                     <div class=" card-title h5">
-                                        <span class=" text-primary">{{ $allOrder->name }}</span>
+                                        <span class=" text-primary">{{ $order->name }}</span>
                                         (<sapn class=" text-muted">
-                                            {{ $allOrder->village->name }}
+                                            {{ $order->village->name }}
                                         </sapn>)
                                     </div>
                                     <div class=" card-subtitle text-muted">
-                                        {{-- put category --}}
+                                        @foreach ($order->orderCategories as $orderCategory)
+                                            {{ $orderCategory->category->name }}|
+                                        @endforeach
                                     </div>
                                     <div class=" text-muted">
-                                        <b>{{ floor($allOrder->weight / 128) }}</b>
+                                        <b>{{ floor($order->weight / 128) }}</b>
                                         ကျပ်သား
-                                        <b>{{ floor(($allOrder->weight % 128) / 8) }}</b>
+                                        <b>{{ floor(($order->weight % 128) / 8) }}</b>
                                         ပဲ
-                                        <b>{{ ($allOrder->weight % 128) % 8 }}</b>
+                                        <b>{{ ($order->weight % 128) % 8 }}</b>
                                         မူး
                                     </div>
                                     <div class=" text-success">
                                         <b>
-                                            {{ number_format($allOrder->price) }}
+                                            @php
+                                                $totalPrice = 0;
+                                                foreach ($order->htetYus as $htetYu) {
+                                                    $totalPrice += $htetYu->price;
+                                                }
+                                                echo number_format($totalPrice);
+                                            @endphp
                                         </b>ကျပ်
                                     </div>
                                     <div class=" card-text">
-                                        @if ($allOrder->note)
+                                        @if ($order->note)
                                             @php
-                                                $note = $allOrder->note;
+                                                $note = $order->note;
                                                 $result = Str::substr($note, 0, 50);
                                             @endphp
                                             <span class=" text-muted"> {{ $result }} . . .</span>
@@ -66,21 +80,34 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class=" d-flex justify-content-between">
-                                        <small class=" text-muted mt-2">20.5.2.22</small>
-                                        <small class=" mt-2 text-primary">{{ $allOrder->owner->name }}</small>
-                                        <a href="/orders/detail" class="btn btn-success">Detail</a>
+                                        <small class=" text-muted mt-2">
+                                            {{-- {{ $order->created_at->diffForHumans() }} --}}
+                                            @php
+                                                $time = $order->updated_at;
+                                                $timeOut = $time->modify('+6 days')->format('Y-m-d H:i:s');
+                                                $now = date('Y-m-d H:i:s');
+                                                if ($now >= $timeOut) {
+                                                    echo $order->updated_at;
+                                                } else {
+                                                    echo $order->updated_at->diffForHumans();
+                                                }
+                                            @endphp
+                                        </small>
+                                        <small class=" mt-2 text-primary">{{ $order->owner->name }}</small>
+                                        <a href="/orders/detail/{{ $order->id }}" class="btn btn-success">Detail</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                    {{ $allOrders->links() }}
+                    {{ $orders->links() }}
                 </div>
             </div>
             {{-- right --}}
             <div class="col-3">
                 {{-- add new --}}
                 <a href="/orders/add" class=" btn btn-success btn-lg mb-2 w-100">အပေါင်ခံမည်</a>
+                {{-- filter --}}
                 <div class="card">
                     <div class="card-header">
                         <div class=" h4 text-primary">
@@ -93,29 +120,21 @@
                             <div class=" form-group mb-3">
                                 <label for="location">နေရပ်</label>
                                 <select class="form-select form-control" name="location">
-                                    <option value="1">1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                    @foreach ($villages as $village)
+                                        <option value="{{ $village->id }}">{{ $village->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">ပစ္စည်း အမျိုးအစား</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="ring" name="category[]"
-                                        value="ring">
-                                    <label class="form-check-label" for="ring">Ring</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rope" name="category[]"
-                                        value="Rope">
-                                    <label class="form-check-label" for="rope">Rope</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="footer" name="category[]"
-                                        value="footer">
-                                    <label class="form-check-label" for="footer">Footer</label>
-                                </div>
+                                @foreach ($categories as $category)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="{{ $category->id }}"
+                                            name="category_id[]" value="{{ $category->id }}">
+                                        <label class="form-check-label"
+                                            for="{{ $category->id }}">{{ $category->name }}</label>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class=" form-group mb-3">
                                 <label for="">ယူငွေ</label>

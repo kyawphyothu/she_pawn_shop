@@ -2,72 +2,6 @@
 
 @section('content')
     <div class="container">
-
-        {{-- detail card --}}
-        <div class=" row">
-            <div class="col-12 col-sm-12 col-md-12 d-flex align-items-stretch flex-column mb-4">
-                <div class="card d-flex flex-fill mb-3">
-                    <div class="card-body">
-                        <div class=" card-title h5">
-                            <span class=" text-primary">{{ $order->name }}</span>
-                            (<sapn class=" text-muted">
-                                {{ $order->village->name }}
-                            </sapn>)
-                        </div>
-                        <div class=" card-subtitle text-muted">
-                            @foreach ($order->orderCategories as $orderCategory)
-                                {{ $orderCategory->category->name }}|
-                            @endforeach
-                        </div>
-                        <div class=" text-muted">
-                            <b>{{ floor($order->weight / 128) }}</b>
-                            ကျပ်သား
-                            <b>{{ floor(($order->weight % 128) / 8) }}</b>
-                            ပဲ
-                            <b>{{ ($order->weight % 128) % 8 }}</b>
-                            မူး
-                        </div>
-                        <div class=" text-success">
-                            <b>
-                                @php
-                                    $totalPrice = 0;
-                                    foreach ($order->htetYus as $htetYu) {
-                                        $totalPrice += $htetYu->price;
-                                    }
-                                    echo number_format($totalPrice);
-                                @endphp
-                            </b>ကျပ်
-                        </div>
-                        <small class=" text-muted">
-                            @php
-                                $time = $order->updated_at;
-                                $timeOut = $time->modify('+6 days')->format('Y-m-d H:i:s');
-                                $now = date('Y-m-d H:i:s');
-                                if ($now >= $timeOut) {
-                                    echo $order->updated_at;
-                                } else {
-                                    echo $order->updated_at->diffForHumans();
-                                }
-                            @endphp
-                        </small>
-                        <a href="/orders/edit/{{ $order->id }}" class="btn btn-outline-primary float-end">Edit</a>
-                    </div>
-                    <div class="card-footer">
-                        @if ($order->note)
-                            @php
-                                $note = $order->note;
-                                $result = Str::substr($note, 0, 50);
-                            @endphp
-                            <span class=" text-muted"> {{ $result }} . . .</span>
-                        @else
-                            <span class=" text-muted">No Note</span>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- htet_yus and pay interest --}}
         <div class="row">
             {{-- HTET YUS --}}
             <div class="col-12 col-sm-4 col-md-4 d-flex align-items-stretch flex-column mb-4">
@@ -85,8 +19,7 @@
                                     @endif
                                     <div class=" card-title text-primary">{{ $htetyu->name }}</div>
                                     <div class=" text-bold text-success">{{ number_format($htetyu->price) }}</div>
-                                    <div
-                                        class=" card-text @if ($htetyu->pawn_id == 1) {{ 'text-danger' }} @endif ">
+                                    <div class=" card-text @if ($htetyu->pawn_id == 1) {{ 'text-danger' }} @endif ">
                                         @php
                                             $time = $htetyu->created_at;
                                             $timeOut = $time->modify('+1 days')->format('Y-m-d H:i:s');
@@ -116,7 +49,6 @@
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
             </div>
@@ -139,8 +71,7 @@
                                     အရင်း
                                     <span class="text-success">{{ number_format($interest->total_price) }}</span>|
                                     အတိုးစုစုပေါင်း
-                                    <span
-                                        class="text-success">{{ number_format($interest->total_interest_price) }}</span>
+                                    <span class="text-success">{{ number_format($interest->total_interest_price) }}</span>
                                     ထဲမှ
                                     <span class="text-success">{{ number_format($interest->paid_interest_price) }}</span>
                                     ဆပ်၍
@@ -153,22 +84,55 @@
                 </div>
             </div>
         </div>
+        {{-- form for pay interest --}}
+        {{-- <div class="row"> --}}
+        <div class="card">
+            <div class="card-header bg-primary bg-opacity-50">
+                <div class=" card-title h4 text-black">
+                    အတိုးဆပ် လပြောင်းမည်
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    @csrf
+                    <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
+                    <div class="mb-3">
+                        <label for="">နာမည်</label>
+                        <input type="text" placeholder="အမည်ထည့်ပါ" name="name" class=" form-control"
+                            value="{{ $order->name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="">အတိုးစုစုပေါင်း</label>
+                        <input type="number" name="totalInterest" class=" form-control" value="{{ $totalInterest }}"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="" class=" text-success">ပေးဆပ်မည့် အတိုး</label>
+                                <input type="number" name="paidInterest" class=" form-control col-6" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="" class=" text-success">ပြောင်းလဲမည့် လ</label>
+                                <input type="datetime-local" class=" form-control" name="changeMonth"
+                                    value="{{ date('Y-m-d H:i:s') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="">အတိုးလာဆပ်သည့်ရက်</label>
+                        <input type="datetime-local" name="paidMonth" id="" class="form-control"
+                            value="{{ date('Y-m-d H:i:s') }}">
+                    </div>
 
-        {{-- buttons --}}
-        <div class=" float-end mb-5">
-            <a href="/orders/htetyu/{{ $order->id }}"
-                class="btn btn-primary @if ($order->pawn_id == 2) disabled @endif">ထပ်ယူ</a>
-            <a href="/orders/payinterest/{{ $order->id }}"
-                class="btn btn-primary @if ($order->pawn_id == 2) disabled @endif">အတိုးဆပ်</a>
-            <a href="/orders/eduction/{{ $order->id }}"
-                class="btn btn-danger @if ($order->pawn_id == 2) disabled @endif">
-                @if ($order->pawn_id == 1)
-                    ရွေးမည်
-                @else
-                    ရွေးပြီးပါပြီ
-                @endif
-            </a>
-            <a href="/" class="btn btn-outline-secondary">Home</a>
+                    <div class="form-group mb-3 float-end">
+                        <input type="submit" name="" id="" class=" btn btn-success" value="အတိုးဆပ်မည်">
+                        <a href="/orders/detail/{{ $order->id }}" class="btn btn-outline-info">Back</a>
+                        <a href="/" class="btn btn-outline-secondary">Home</a>
+                    </div>
+                </form>
+            </div>
         </div>
+        {{-- </div> --}}
     </div>
 @endsection

@@ -16,10 +16,14 @@ return new class extends Migration
     {
         Schema::create('htet_yus', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->integer('order_id');
             $table->integer('price');
+            $table->integer('pawn_id')->default(1)->nullable(false);
             // $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamps();
+            // $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

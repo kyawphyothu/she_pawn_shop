@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Order::factory(50)->create();
+        // Order::factory(50)->create();
 
         //owner
         Owner::factory()->create([

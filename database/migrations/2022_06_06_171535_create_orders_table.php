@@ -21,11 +21,11 @@ return new class extends Migration
             $table->integer('village_id');
             $table->integer('owner_id');
             $table->integer('weight');
-            $table->integer('price');
+            // $table->integer('price');
             $table->longText('note')->default('မှတ်ချက်မရှိသေးပါ');
-            // $table->timestamp('pawn_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            // $table->timestamp('pawn_date_update')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            // $table->timestamps();
         });
     }
 

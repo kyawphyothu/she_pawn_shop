@@ -18,4 +18,19 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Owner');
     }
+
+    public function orderCategories()
+    {
+        return $this->hasMany('App\Models\OrderCategory');
+    }
+
+    public function htetYus()
+    {
+        return $this->hasMany('App\Models\HtetYu');
+    }
+
+    public function payInterests()
+    {
+        return $this->hasMany('App\Models\Interest');
+    }
 }
