@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Eduction;
 use App\Models\HtetYu;
 use App\Models\Interest;
 use App\Models\Order;
 use App\Models\OrderCategory;
 use App\Models\Owner;
+use App\Models\Rate;
 use App\Models\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,56 +17,98 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    // public function test($order_id)
+    // {
+
+    //     $interest = Interest::where('order_id', $order_id)
+    //         ->select('created_at')
+    //         ->orderBy('created_at', 'desc')
+    //         ->first();
+    //     dd($interest);
+    // }
+
     //home page
     public function index()
     {
-        $allOrders = Order::latest()->paginate(12);
+        $allOrders = Order::latest()->paginate(9);
         $villages = Village::all();
         $categories = Category::all();
+        $rate4L = Rate::find(1)->interest_rate * 100;
+        $rate4G = Rate::find(2)->interest_rate * 100;
 
         return view('orders.index', [
             'orders' => $allOrders,
             'villages' => $villages,
             'categories' => $categories,
+            'rate4L' => $rate4L,
+            'rate4G' => $rate4G,
         ]);
     }
+
+    public function searchByName()
+    {
+        $name = request()->q;
+        $order = Order::where('name', 'like', "%$name%")->latest()->paginate(9);
+        $villages = Village::all();
+        $categories = Category::all();
+        $rate4L = Rate::find(1)->interest_rate * 100;
+        $rate4G = Rate::find(2)->interest_rate * 100;
+
+        return view('orders.index', [
+            'orders' => $order,
+            'villages' => $villages,
+            'categories' => $categories,
+            'name' => $name,
+            'rate4L' => $rate4L,
+            'rate4G' => $rate4G,
+        ]);
+    }
+
 
     //filter
     public function filter(Request $request)
     {
-        // $orders = Order::where('pawn_id', 1);
-        // $orders = DB::table('orders');
-        // $orders = new Order();
         $orders = Order::query();
 
+        if ($request->name) {
+            $orders->where('name', "like", "%$request->name%");
+        }
         if ($request->category_id) {
-            foreach ($request->category_id as $category_id) {
-                $orders->leftjoin('order_categories', 'orders.id', '=', 'order_categories.order_id')
-                    ->select('orders.*')
-                    ->orWhere('order_categories.category_id', $category_id);
-            }
+            $orders->select('orders.*')
+                ->leftJoin('order_categories', 'orders.id', '=', 'order_categories.order_id')
+                ->whereIn('order_categories.category_id', $request->category_id);
         }
 
         if ($request->location) {
             $orders->where('village_id', $request->location);
         }
 
-        // if ($request->has('gender')) {
-        //     $orders-  >where('gender', $request->gender);
+        //ဈေးနဲ့ရှာတာမထည့်ထားသေးဘူး
+        // if($request->price){
+        //     $orders->where('')
         // }
 
-        // if ($request->has('created_at')) {
-        //     $orders->where('created_at', '>=', $request->created_at);
-        // }
-        $allOrders = $orders->latest()->paginate(12);
+        $allOrders = $orders->distinct()->latest()->paginate(9);
         $villages = Village::all();
         $categories = Category::all();
-        // dd($allOrders);
+        $rate4L = Rate::find(1)->interest_rate * 100;
+        $rate4G = Rate::find(2)->interest_rate * 100;
+
 
         return view('orders.index', [
             'orders' => $allOrders,
             'villages' => $villages,
             'categories' => $categories,
+            'name' => $request->name,
+            'location' => $request->location,
+            'category_id_arr' => $request->category_id,
+            'rate4L' => $rate4L,
+            'rate4G' => $rate4G,
         ]);
     }
 
@@ -81,15 +125,6 @@ class OrderController extends Controller
             'categories' => $categories,
         ]);
     }
-
-    // public function searchByName()
-    // {
-    //     $name = request()->name;
-    //     return view('orders.index', [
-    //         print_r($name)
-    //     ]);
-    // }
-
 
     //create new order
     public function create()
@@ -144,6 +179,8 @@ class OrderController extends Controller
         $htet_yus->name = $name;
         $htet_yus->order_id = $lastInsertId;
         $htet_yus->price = $price;
+        $htet_yus->created_at = $created_at;
+        $htet_yus->updated_at = $created_at;
         $htet_yus->save();
 
         return redirect('/');
@@ -152,10 +189,13 @@ class OrderController extends Controller
     //detail page
     public function detail($id)
     {
+        $id = $id;
         $order = Order::find($id);
+        $eduction = Eduction::where('order_id', $id)->first();
 
         return view('orders.details', [
             'order' => $order,
+            'eduction' => $eduction,
         ]);
     }
 
@@ -182,6 +222,7 @@ class OrderController extends Controller
         $htetyu->order_id = $id;
         $htetyu->price = $price;
         $htetyu->created_at = $date;
+        $htetyu->updated_at = $date;
         $htetyu->save();
 
         return redirect("/orders/detail/$id");
@@ -192,12 +233,16 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
 
+        //rate
+        $rate4L = Rate::find(1)->interest_rate;
+        $rate4G = Rate::find(2)->interest_rate;
+
         //finding rate
         $totalPrice = 0;
         foreach ($order->htetYus as $htetYu) {
             $totalPrice += $htetYu->price;
         }
-        $totalPrice >= 500000 ? $rate = 0.02 : $rate = 0.05;
+        $totalPrice >= 500000 ? $rate = $rate4G : $rate = $rate4L;
 
         //calculte interest
         $now = strtotime(date('Y-m-d H:i:s'));
@@ -206,26 +251,36 @@ class OrderController extends Controller
         $now_Day = +date('d', $now);
 
         //calcutate price
+        $totalInterest = 0;
         $totalInterestForPawnId_1 = 0;
-        $totalPriceForPawnId_2 = 0;
+        $totalInterestForPawnId_2 = 0;
+        $priceMonth = "အရင်း ";
+        // dd($priceMonth);
         foreach ($order->htetYus as $htetYu) {
             if ($htetYu->pawn_id == 1) {
                 $priceForPawnId_1 = $htetYu->price;
 
                 $totalMonthDifferenceForPawnId_1 = 0;
                 $totalDayDifferenceForPawnId_1 = 0;
-                $dateForPawnId_1 = HtetYu::where('order_id', $id)->where('pawn_id', 1)->firstOrFail();
-                $dateForPawnId_1 = $dateForPawnId_1->updated_at;
-                $dateForPawnId_1 = strtotime(date_format($dateForPawnId_1, 'Y-m-d H:i:s'));
+                // $dateForPawnId_1 = HtetYu::where('order_id', $id)->where('pawn_id', 1)->get();
+                // dd($dateForPawnId_1);
+                $dateForPawnId_1 = $htetYu->updated_at;
+                // $dateForPawnId_1 = $dateForPawnId_1->updated_at;
+                $formatedDate = date_format($dateForPawnId_1, 'Y-m-d H:i:s');
+                $dateForPawnId_1 = strtotime($formatedDate);
                 $dateForPawnId_1_Year = +date('Y', $dateForPawnId_1);
                 $dateForPawnId_1_Month = +date('m', $dateForPawnId_1);
                 $dateForPawnId_1_Day = +date('d', $dateForPawnId_1);
+                // dd($now_Month);
+                // dd($dateForPawnId_1_Month);
 
                 if ($dateForPawnId_1_Day > $now_Day) {
                     $now_Day += 30;
                     $now_Month -= 1;
+                    $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
                     $totalMonthDifferenceForPawnId_1 += ($now_Day - $dateForPawnId_1_Day) / 30;
                 } elseif ($dateForPawnId_1_Day < $now_Day) {
+                    $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
                     $totalMonthDifferenceForPawnId_1 += ($now_Day - $dateForPawnId_1_Day) / 30;
                 }
 
@@ -238,7 +293,9 @@ class OrderController extends Controller
                 }
 
                 $totalMonthDifferenceForPawnId_1 += ($now_Year - $dateForPawnId_1_Year) * 12;
-                $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
+                // dd($totalMonthDifferenceForPawnId_1);
+                // dd($totalDayDifferenceForPawnId_1);
+                // $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
                 //day difference or month difference
                 if ($totalMonthDifferenceForPawnId_1 < 1) {
                     if ($totalDayDifferenceForPawnId_1 > 7) {
@@ -246,20 +303,25 @@ class OrderController extends Controller
                     } elseif ($totalDayDifferenceForPawnId_1 < 7) {
                         $totalInterestForPawnId_1 += $priceForPawnId_1 * $rate * 0.5;  //final result total interest for pawn id 1
                     }
+                } else {
+                    $totalInterestForPawnId_1 += $priceForPawnId_1 * $rate * $totalMonthDifferenceForPawnId_1;  //final result total interest for pawn id 1
                 }
+                $totalInterest += $totalInterestForPawnId_1;    //interest တန်ဖိုး စုစုပေါင်း
+                $priceMonth .= " $priceForPawnId_1 ($formatedDate)|";
+                // dd($priceMonth);
+                // dd($totalInterest);
             } elseif ($htetYu->pawn_id == 2) {
-                $totalPriceForPawnId_2 += $htetYu->price;
-            }
-        }
-        $totalInterest = $totalInterestForPawnId_1;
-
-        //calculate interest for pawin_id = 2
-        foreach ($order->htetYus as $htetYu) {
-            if ($htetYu->pawn_id == 2) {
+                $priceForPawnId_2 = $htetYu->price;
+                $totalInterestForPawnId_2 = 0;
+                $totalDayDifferenceForPawnId_2 = 0;
                 $totalMonthDifferenceForPawnId_2 = 0;
+
+                $totalMonthDifferenceForPawnId_2 = 0;
+                $totalDayDifferenceForPawnId_2 = 0;
                 $dateForPawnId_2 = HtetYu::where('order_id', $id)->where('pawn_id', 2)->firstOrFail();
                 $dateForPawnId_2 = $dateForPawnId_2->updated_at;
-                $dateForPawnId_2 = strtotime(date_format($dateForPawnId_2, 'Y-m-d H:i:s'));
+                $formatedDate = date_format($dateForPawnId_2, 'Y-m-d H:i:s');
+                $dateForPawnId_2 = strtotime($formatedDate);
                 $dateForPawnId_2_Year = +date('Y', $dateForPawnId_2);
                 $dateForPawnId_2_Month = +date('m', $dateForPawnId_2);
                 $dateForPawnId_2_Day = +date('d', $dateForPawnId_2);
@@ -267,8 +329,10 @@ class OrderController extends Controller
                 if ($dateForPawnId_2_Day > $now_Day) {
                     $now_Day += 30;
                     $now_Month -= 1;
+                    $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
                     $totalMonthDifferenceForPawnId_2 += ($now_Day - $dateForPawnId_2_Day) / 30;
                 } elseif ($dateForPawnId_2_Day < $now_Day) {
+                    $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
                     $totalMonthDifferenceForPawnId_2 += ($now_Day - $dateForPawnId_2_Day) / 30;
                 }
 
@@ -279,28 +343,31 @@ class OrderController extends Controller
                 } elseif ($dateForPawnId_2_Month < $now_Month) {
                     $totalMonthDifferenceForPawnId_2 += ($now_Month - $dateForPawnId_2_Month);
                 }
+
                 $totalMonthDifferenceForPawnId_2 += ($now_Year - $dateForPawnId_2_Year) * 12;
-                $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
-                // dd(gettype($totalMonthDifferenceForPawnId_2));
+                // $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
+                //day difference or month difference
                 if ($totalMonthDifferenceForPawnId_2 < 1) {
                     if ($totalDayDifferenceForPawnId_2 > 7) {
-                        $totalMonthDifferenceForPawnId_2 = 1;
+                        $totalInterestForPawnId_2 += $priceForPawnId_2 * $rate * 1;  //final result total interest for pawn id 1
                     } elseif ($totalDayDifferenceForPawnId_2 < 7) {
-                        $totalMonthDifferenceForPawnId_2 = 0.5;
+                        $totalInterestForPawnId_2 += $priceForPawnId_2 * $rate * 0.5;  //final result total interest for pawn id 1
                     }
-                    $totalInterestForPawnId_2 = $totalPriceForPawnId_2 * $rate * $totalMonthDifferenceForPawnId_2;  //final result total interest for pawn id 2
                 } else {
-                    $totalInterestForPawnId_2 = $totalPriceForPawnId_2 * $rate * $totalMonthDifferenceForPawnId_2;  //final result total interest for pawn id 2
+                    $totalInterestForPawnId_2 += $priceForPawnId_2 * $rate * $totalMonthDifferenceForPawnId_2;  //final result total interest for pawn id 1
                 }
-
                 $totalInterest += $totalInterestForPawnId_2;
+                $priceMonth .= " $priceForPawnId_2 ($formatedDate)|";
+                // dd($totalInterest);
             }
         }
+
         $totalInterest = floor($totalInterest);
 
         return view('orders.payInterest', [
             'order' => $order,
             'totalInterest' => $totalInterest,
+            'priceMonth' => $priceMonth,
             'totalPrice' => $totalPrice,
         ]);
     }
@@ -312,19 +379,30 @@ class OrderController extends Controller
 
         $name = request()->name;
         $totalPrice = request()->totalPrice;
+        $priceMonth = request()->priceMonth;
         $totalInterest = request()->totalInterest;
         $paidInterest = request()->paidInterest;
         $changeMonth = request()->changeMonth;
         $paidMonth = request()->paidMonth;
 
-        HtetYu::where('id', $id)
+        HtetYu::where('order_id', $id)
             ->where('pawn_id', 1)
-            ->update(['pawn_id' => 2]);
+            ->update(['pawn_id' => 2, 'updated_at' => $changeMonth]);
+
+        HtetYu::where('order_id', $id)
+            ->where('pawn_id', 2)
+            ->update(['updated_at' => $changeMonth]);
+
+        // $htet_yu = HtetYu::where('order_id', $id);
+        // $htet_yu->pawn_id = 2;
+        // $htet_yu->updated_at = $changeMonth;
+        // $htet_yu->save();
 
         $interest = new Interest();
         $interest->order_id = $id;
         $interest->name = $name;
         $interest->total_price = $totalPrice;
+        $interest->price_month = $priceMonth;
         $interest->total_interest_price = $totalInterest;
         $interest->paid_interest_price = $paidInterest;
         $interest->created_at = $changeMonth;
@@ -403,8 +481,172 @@ class OrderController extends Controller
     public function eduction($id)
     {
         $order = Order::find($id);
-        $order->pawn_id = 2;
+        // $order->pawn_id = 2;
 
-        return redirect('/');
+        //finding rate
+        $totalPrice = 0;
+        foreach ($order->htetYus as $htetYu) {
+            $totalPrice += $htetYu->price;
+        }
+        $totalPrice >= 500000 ? $rate = 0.02 : $rate = 0.03;
+
+        //calculte interest
+        $now = strtotime(date('Y-m-d H:i:s'));
+        $now_Year = +date('Y', $now);
+        $now_Month = +date('m', $now);
+        $now_Day = +date('d', $now);
+
+        //calcutate price
+        $totalInterest = 0;
+        $totalInterestForPawnId_1 = 0;
+        $totalInterestForPawnId_2 = 0;
+        // $totalPriceForPawnId_2 = 0;
+        foreach ($order->htetYus as $htetYu) {
+            if ($htetYu->pawn_id == 1) {
+                $priceForPawnId_1 = $htetYu->price;
+                $totalInterestForPawnId_1 = 0;
+                $totalDayDifferenceForPawnId_1 = 0;
+                $totalMonthDifferenceForPawnId_1 = 0;
+
+                $totalMonthDifferenceForPawnId_1 = 0;
+                $totalDayDifferenceForPawnId_1 = 0;
+                // $dateForPawnId_1 = HtetYu::where('order_id', $id)->where('pawn_id', 1)->firstOrFail();
+                $dateForPawnId_1 = $htetYu->updated_at;
+                // $dateForPawnId_1 = $dateForPawnId_1->updated_at;
+                $dateForPawnId_1 = strtotime(date_format($dateForPawnId_1, 'Y-m-d H:i:s'));
+                $dateForPawnId_1_Year = +date('Y', $dateForPawnId_1);
+                $dateForPawnId_1_Month = +date('m', $dateForPawnId_1);
+                $dateForPawnId_1_Day = +date('d', $dateForPawnId_1);
+
+                if ($dateForPawnId_1_Day > $now_Day) {
+                    $now_Day += 30;
+                    $now_Month -= 1;
+                    $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
+                    $totalMonthDifferenceForPawnId_1 += ($now_Day - $dateForPawnId_1_Day) / 30;
+                } elseif ($dateForPawnId_1_Day < $now_Day) {
+                    $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
+                    $totalMonthDifferenceForPawnId_1 += ($now_Day - $dateForPawnId_1_Day) / 30;
+                }
+
+                if ($dateForPawnId_1_Month > $now_Month) {
+                    $now_Month += 12;
+                    $now_Year -= 1;
+                    $totalMonthDifferenceForPawnId_1 += ($now_Month - $dateForPawnId_1_Month);
+                } elseif ($dateForPawnId_1_Month < $now_Month) {
+                    $totalMonthDifferenceForPawnId_1 += ($now_Month - $dateForPawnId_1_Month);
+                }
+
+                $totalMonthDifferenceForPawnId_1 += ($now_Year - $dateForPawnId_1_Year) * 12;
+                // $totalDayDifferenceForPawnId_1 = $now_Day - $dateForPawnId_1_Day;
+                //day difference or month difference
+                if ($totalMonthDifferenceForPawnId_1 < 1) {
+                    if ($totalDayDifferenceForPawnId_1 > 7) {
+                        $totalInterestForPawnId_1 += $priceForPawnId_1 * $rate * 1;  //final result total interest for pawn id 1
+                    } elseif ($totalDayDifferenceForPawnId_1 < 7) {
+                        $totalInterestForPawnId_1 += $priceForPawnId_1 * $rate * 0.5;  //final result total interest for pawn id 1
+                    }
+                } else {
+                    $totalInterestForPawnId_1 += $priceForPawnId_1 * $rate * $totalMonthDifferenceForPawnId_1;  //final result total interest for pawn id 1
+                }
+                $totalInterest += $totalInterestForPawnId_1;
+            } elseif ($htetYu->pawn_id == 2) {
+                $priceForPawnId_2 = $htetYu->price;
+                $totalInterestForPawnId_2 = 0;
+                $totalDayDifferenceForPawnId_2 = 0;
+                $totalMonthDifferenceForPawnId_2 = 0;
+
+                $totalMonthDifferenceForPawnId_2 = 0;
+                $totalDayDifferenceForPawnId_2 = 0;
+                $dateForPawnId_2 = HtetYu::where('order_id', $id)->where('pawn_id', 2)->firstOrFail();
+                $dateForPawnId_2 = $dateForPawnId_2->updated_at;
+                $dateForPawnId_2 = strtotime(date_format($dateForPawnId_2, 'Y-m-d H:i:s'));
+                $dateForPawnId_2_Year = +date('Y', $dateForPawnId_2);
+                $dateForPawnId_2_Month = +date('m', $dateForPawnId_2);
+                $dateForPawnId_2_Day = +date('d', $dateForPawnId_2);
+
+                if ($dateForPawnId_2_Day > $now_Day) {
+                    $now_Day += 30;
+                    $now_Month -= 1;
+                    $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
+                    $totalMonthDifferenceForPawnId_2 += ($now_Day - $dateForPawnId_2_Day) / 30;
+                } elseif ($dateForPawnId_2_Day < $now_Day) {
+                    $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
+                    $totalMonthDifferenceForPawnId_2 += ($now_Day - $dateForPawnId_2_Day) / 30;
+                }
+
+                if ($dateForPawnId_2_Month > $now_Month) {
+                    $now_Month += 12;
+                    $now_Year -= 1;
+                    $totalMonthDifferenceForPawnId_2 += ($now_Month - $dateForPawnId_2_Month);
+                } elseif ($dateForPawnId_2_Month < $now_Month) {
+                    $totalMonthDifferenceForPawnId_2 += ($now_Month - $dateForPawnId_2_Month);
+                }
+
+                $totalMonthDifferenceForPawnId_2 += ($now_Year - $dateForPawnId_2_Year) * 12;
+                // $totalDayDifferenceForPawnId_2 = $now_Day - $dateForPawnId_2_Day;
+                //day difference or month difference
+                if ($totalMonthDifferenceForPawnId_2 < 1) {
+                    if ($totalDayDifferenceForPawnId_2 > 7) {
+                        $totalInterestForPawnId_2 += $priceForPawnId_2 * $rate * 1;  //final result total interest for pawn id 1
+                    } elseif ($totalDayDifferenceForPawnId_2 < 7) {
+                        $totalInterestForPawnId_2 += $priceForPawnId_2 * $rate * 0.5;  //final result total interest for pawn id 1
+                    }
+                } else {
+                    $totalInterestForPawnId_2 += $priceForPawnId_2 * $rate * $totalMonthDifferenceForPawnId_2;  //final result total interest for pawn id 1
+                }
+                $totalInterest += $totalInterestForPawnId_2;
+            }
+        }
+
+        // dd($totalInterest);
+        $totalInterest = round($totalInterest);
+
+        return view('orders.eduction', [
+            'order' => $order,
+            'totalInterest' => $totalInterest,
+            'totalPrice' => $totalPrice,
+        ]);
+    }
+
+    public function educt($id)
+    {
+        $name = request()->name;
+        $price = request()->price;
+        $interest = request()->interest;
+        $total = request()->total;
+        $paid = request()->paid;
+        $day = request()->day;
+        $note = request()->note;
+
+        //pawn_id to 2
+        $order = Order::find($id);
+        $order->pawn_id = 2;
+        $order->save();
+
+        //create eduction table
+        $eduction = new Eduction();
+        if ($note) {
+            $eduction->order_id = $id;
+            $eduction->name = $name;
+            $eduction->price = $price;
+            $eduction->interest = $interest;
+            $eduction->total = $total;
+            $eduction->paid = $paid;
+            $eduction->created_at = $day;
+            $eduction->note = $note;
+            $eduction->save();
+        } else {
+            $eduction->order_id = $id;
+            $eduction->name = $name;
+            $eduction->price = $price;
+            $eduction->interest = $interest;
+            $eduction->total = $total;
+            $eduction->paid = $paid;
+            $eduction->created_at = $day;
+            $eduction->save();
+        }
+
+
+        return redirect("/orders/detail/$id");
     }
 }

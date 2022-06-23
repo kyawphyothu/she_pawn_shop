@@ -33,4 +33,9 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\Interest');
     }
+
+    public function eduction()
+    {
+        return $this->belongsTo('App\Models\Eduction');
+    }
 }

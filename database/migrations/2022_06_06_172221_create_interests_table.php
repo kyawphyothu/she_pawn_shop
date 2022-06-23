@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('order_id');
             $table->string('name');
             $table->integer('total_price');
+            $table->longText('price_month');
             $table->integer('total_interest_price');
             $table->integer('paid_interest_price');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

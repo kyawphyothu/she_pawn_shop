@@ -3,7 +3,7 @@
 use App\Http\Controllers\HtetYuController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\RateController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,29 +18,30 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Auth::routes();
+// Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //test
-Route::get('/test', function () {
-    return view('pawn.index');
-});
+Route::get('/test/{id}', [OrderController::class, 'test']);
 
 //index
 Route::get('/', [OrderController::class, 'index']);
-Route::post('/', [OrderController::class, 'filter']);
+Route::get('/orders/index', [OrderController::class, 'index']);
 
 //add order
 Route::get('/orders/add', [OrderController::class, 'add']);
 Route::post('/orders/add', [OrderController::class, 'create']);
 
 //search by name
-Route::post('orders/search', [OrderController::class, 'searchByName']);
+Route::get('/orders/search', [OrderController::class, 'searchByName']);
+Route::get('/orders/filter', [OrderController::class, 'filter']);
+// Route::post('orders/search', [OrderController::class, 'searchByName']);
 
 //detail page
 Route::get('/orders/detail/{id}', [OrderController::class, 'detail']);
@@ -59,9 +60,14 @@ Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
 
 //eduction page
 Route::get('/orders/eduction/{id}', [OrderController::class, 'eduction']);
+Route::post('/orders/eduction/{id}', [OrderController::class, 'educt']);
 
 //htetyu delete
 Route::get('/htetyus/delete/{id}', [HtetYuController::class, 'delete']);
 
 //interest delete
 Route::get('/interests/delete/{id}', [InterestController::class, 'delete']);
+
+//
+Route::get('/rates/update', [RateController::class, 'index']);
+Route::post('/rates/update', [RateController::class, 'change']);

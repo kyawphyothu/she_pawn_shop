@@ -16,14 +16,14 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-        // return [
-        //     'name' => $this->faker->name(),
-        //     'pawn_id' => rand(0, 1),
-        //     'village_id' => rand(1, 5),
-        //     'owner_id' => rand(1, 4),
-        //     'weight' => rand(100, 1000),
-        //     'price' => rand(10000, 1000000),
-        //     'note' => $this->faker->paragraph(),
-        // ];
+        return [
+            'name' => $this->faker->name(),
+            'pawn_id' => rand(1, 2),
+            'village_id' => rand(1, 5),
+            'owner_id' => rand(1, 4),
+            'weight' => rand(100, 1000),
+            // 'price' => rand(10000, 1000000),
+            'note' => $this->faker->paragraph(),
+        ];
     }
 }

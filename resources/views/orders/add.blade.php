@@ -48,29 +48,31 @@
                             <label for="">အလေးချိန်</label>
                             <div class="col">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="weightKyat" value="0" min="0">
+                                    <input type="number" class="form-control" name="weightKyat" value="0"
+                                        min="0">
                                     <span class=" input-group-text">ကျပ်သား</span>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="weightPae" value="0" max="15" min="0">
+                                    <input type="number" class="form-control" name="weightPae" value="0"
+                                        max="15" min="0">
                                     <span class=" input-group-text">ပဲ</span>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="weightYwe" value="0" max="7" min="0">
+                                    <input type="number" class="form-control" name="weightYwe" value="0"
+                                        max="7" min="0">
                                     <span class=" input-group-text">ရွေး</span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class=" form-group mb-3">
                         <label for="">ယူငွေ</label>
                         <div class="input-group">
-                            <input type="number" name="price" class=" form-control" min="1000">
+                            <input type="number" name="price" class=" form-control" min="1000" step="1000">
                             <span class=" input-group-text">ကျပ်</span>
                         </div>
                     </div>
@@ -89,7 +91,8 @@
                     </div>
                     <div class=" form-group mb-3">
                         <label for="">မှတ်ချက်</label>
-                        <textarea name="note" id="" cols="30" rows="5" class=" form-control" placeholder="မှတ်ချက်ရေးရန်..."></textarea>
+                        <textarea name="note" id="" cols="30" rows="5" class=" form-control"
+                            placeholder="မှတ်ချက်ရေးရန်..."></textarea>
                     </div>
 
                     <div class="form-group float-end">

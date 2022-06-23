@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OrderCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Rate>
  */
-class OrderCategoryFactory extends Factory
+class RateFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class OrderCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'order_id' => rand(1, 20),
-            'category_id' => rand(1, 7),
-
+            //
         ];
     }
 }

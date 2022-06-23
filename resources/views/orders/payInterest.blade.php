@@ -95,6 +95,7 @@
             <div class="card-body">
                 <form action="" method="POST">
                     @csrf
+                    <input type="hidden" name="priceMonth" value="{{ $priceMonth }}">
                     <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
                     <div class="mb-3">
                         <label for="">နာမည်</label>
@@ -103,14 +104,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="">အတိုးစုစုပေါင်း</label>
-                        <input type="number" name="totalInterest" class=" form-control" value="{{ $totalInterest }}"
-                            required>
+                        <input type="number" step="1000" name="totalInterest" class=" form-control"
+                            value="{{ $totalInterest }}" required>
                     </div>
                     <div class="mb-3">
                         <div class="row">
                             <div class="col-6">
                                 <label for="" class=" text-success">ပေးဆပ်မည့် အတိုး</label>
-                                <input type="number" name="paidInterest" class=" form-control col-6" required>
+                                <input type="number" step="1000" name="paidInterest" class=" form-control col-6"
+                                    required>
                             </div>
                             <div class="col-6">
                                 <label for="" class=" text-success">ပြောင်းလဲမည့် လ</label>

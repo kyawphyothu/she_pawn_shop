@@ -971,10 +971,7 @@ eval("\n\nvar bind = __webpack_require__(/*! ./helpers/bind */ \"./node_modules/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ \"./resources/js/bootstrap.js\");\n/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);\n //clear the search input\n\nvar clearBtn = document.querySelector('#clear');\nvar input = document.querySelector('#input');\nclearBtn.onclick = clearInput;\n\nfunction clearInput() {\n  input.value = '';\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvYXBwLmpzLmpzIiwibWFwcGluZ3MiOiI7OztDQUVBOztBQUNBLElBQUlBLFFBQVEsR0FBR0MsUUFBUSxDQUFDQyxhQUFULENBQXVCLFFBQXZCLENBQWY7QUFDQSxJQUFJQyxLQUFLLEdBQUdGLFFBQVEsQ0FBQ0MsYUFBVCxDQUF1QixRQUF2QixDQUFaO0FBQ0FGLFFBQVEsQ0FBQ0ksT0FBVCxHQUFtQkMsVUFBbkI7O0FBRUEsU0FBU0EsVUFBVCxHQUFxQjtFQUNqQkYsS0FBSyxDQUFDRyxLQUFOLEdBQWMsRUFBZDtBQUNIIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL2pzL2FwcC5qcz9jZWQ2Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAnLi9ib290c3RyYXAnO1xuXG4vL2NsZWFyIHRoZSBzZWFyY2ggaW5wdXRcbnZhciBjbGVhckJ0biA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJyNjbGVhcicpO1xudmFyIGlucHV0ID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignI2lucHV0Jyk7XG5jbGVhckJ0bi5vbmNsaWNrID0gY2xlYXJJbnB1dDtcblxuZnVuY3Rpb24gY2xlYXJJbnB1dCgpe1xuICAgIGlucHV0LnZhbHVlID0gJyc7XG59XG4iXSwibmFtZXMiOlsiY2xlYXJCdG4iLCJkb2N1bWVudCIsInF1ZXJ5U2VsZWN0b3IiLCJpbnB1dCIsIm9uY2xpY2siLCJjbGVhcklucHV0IiwidmFsdWUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
 
 /***/ }),
 

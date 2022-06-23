@@ -17,7 +17,10 @@ class HtetYuFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name(),
+            'order_id' => rand(1, 20),
+            'price' => rand(100000, 2000000),
+            'pawn_id' => 1,
         ];
     }
 }

@@ -78,10 +78,12 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     @if ($key > 0)
-                                        <a href="/htetyus/delete/{{ $htetyu->id }}"
-                                            onclick="return confirm('ထိုအချက်အလက်ကို အပြီးတိုင်ဖျက်ပစ်မည်ဖြစ်သည်။ သေချာပါသလား?')">
-                                            <i class="fa-solid fa-xmark text-danger float-end"></i>
-                                        </a>
+                                        @if ($htetyu->pawn_id == 1)
+                                            <a href="/htetyus/delete/{{ $htetyu->id }}"
+                                                onclick="return confirm('ထိုအချက်အလက်ကို အပြီးတိုင်ဖျက်ပစ်မည်ဖြစ်သည်။ သေချာပါသလား?')">
+                                                <i class="fa-solid fa-xmark text-danger float-end"></i>
+                                            </a>
+                                        @endif
                                     @endif
                                     <div class=" card-title text-primary">{{ $htetyu->name }}</div>
                                     <div class=" text-bold text-success">{{ number_format($htetyu->price) }}</div>
@@ -129,26 +131,50 @@
                         @foreach ($order->payInterests as $key => $interest)
                             <div class="card mb-2">
                                 <div class=" card-body">
-                                    <a href="/interests/delete/{{ $interest->id }}"
-                                        onclick="return confirm('ထိုအချက်အလက်ကို အပြီးတိုင်ဖျက်ပစ်မည်ဖြစ်သည်။ သေချာပါသလား?')">
-                                        <i class="fa-solid fa-xmark text-danger float-end"></i>
-                                    </a>
+                                    @if ($key == count($order->payInterests) - 1)
+                                        <a href="/interests/delete/{{ $interest->id }}"
+                                            onclick="return confirm('ထိုအချက်အလက်ကို အပြီးတိုင်ဖျက်ပစ်မည်ဖြစ်သည်။ သေချာပါသလား?')">
+                                            <i class="fa-solid fa-xmark text-danger float-end"></i>
+                                        </a>
+                                    @endif
                                     <div class="card-title text-primary">{{ $interest->name }}
-                                        ({{ $interest->created_at }})
+                                        ({{ $interest->updated_at }})
                                     </div>
-                                    အရင်း
-                                    <span class="text-success">{{ number_format($interest->total_price) }}</span>|
+                                    {{-- အရင်း
+                                    <span class="text-success">{{ number_format($interest->total_price) }}</span>| --}}
+                                    <div class="text-success">{{ $interest->price_month }}</div>
                                     အတိုးစုစုပေါင်း
                                     <span
                                         class="text-success">{{ number_format($interest->total_interest_price) }}</span>
                                     ထဲမှ
                                     <span class="text-success">{{ number_format($interest->paid_interest_price) }}</span>
                                     ဆပ်၍
-                                    <span class="text-danger">{{ $interest->updated_at }}</span> သိ့
+                                    <span class="text-danger">{{ $interest->created_at }}</span> သို့
                                     ပြောင်းရွှေ့ခဲ့သည်။
                                 </div>
                             </div>
                         @endforeach
+                        @if ($order->pawn_id == 2)
+                            <div class="card mb-2 bg-danger bg-opacity-25">
+                                <div class=" card-body">
+                                    <div class="card-title text-primary">{{ $eduction->name }}
+                                        ({{ $eduction->created_at }})
+                                    </div>
+                                    <div>
+                                        အရင်း <span class=" text-primary">{{ number_format($eduction->price) }}</span> +
+                                        အတိုး <span class=" text-primary">{{ number_format($eduction->interest) }}</span>
+                                        = <span class=" text-success">{{ number_format($eduction->total) }}</span>
+                                    </div>
+                                    <div>
+                                        ရွေးယူသည့်ငွေ = <span
+                                            class="text-success">{{ number_format($eduction->paid) }}</span>
+                                    </div>
+                                </div>
+                                <div class=" card-footer">
+                                    <span class="text-muted">{{ $eduction->note }}</span>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

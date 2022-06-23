@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">ထပ်ယူငွေ</label>
-                        <input type="number" min="1000" class=" form-control" name="price">
+                        <input type="number" min="1000" step="1000" class=" form-control" name="price">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">ရက်စွဲ</label><br>
