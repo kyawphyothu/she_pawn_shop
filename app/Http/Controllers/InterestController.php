@@ -6,6 +6,7 @@ use App\Models\Interest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\HtetYu;
+use App\Models\History;
 
 class InterestController extends Controller
 {
@@ -69,6 +70,12 @@ class InterestController extends Controller
                     ->update(['updated_at' => $created_at, 'pawn_id' => 1]);
             }
         }
+
+        //history ကို ဖျကလိုက်ပြီလို့ အကြောင်းကြား
+        History::where('status', 3)
+            ->where('related_id', $id)
+            ->update(['cancled' => 1]);
+
 
 
         return back();

@@ -42,18 +42,18 @@
                                 @if ($order->pawn_id == 2) style="background-color: #d5d4d4bd;" @endif>
                                 <div class="card-body">
                                     <div class=" card-title h5">
-                                        <span class=" text-primary">{{ $order->name }}</span>
+                                        <span class=" text-primary">{{ $order->name }}</span> {{-- //name --}}
                                         (<sapn class=" text-muted">
-                                            {{ $order->village->name }}
+                                            {{ $order->village->name }} {{-- //village_name --}}
                                         </sapn>)
                                     </div>
                                     <div class=" card-subtitle text-muted">
                                         @foreach ($order->orderCategories as $orderCategory)
-                                            {{ $orderCategory->category->name }}|
+                                            {{ $orderCategory->category->name }}| {{-- //category --}}
                                         @endforeach
                                     </div>
                                     <div class=" text-muted">
-                                        <b>{{ floor($order->weight / 128) }}</b>
+                                        <b>{{ floor($order->weight / 128) }}</b> {{-- အလေးချိန် --}}
                                         ကျပ်သား
                                         <b>{{ floor(($order->weight % 128) / 8) }}</b>
                                         ပဲ
@@ -67,7 +67,7 @@
                                                 foreach ($order->htetYus as $htetYu) {
                                                     $totalPrice += $htetYu->price;
                                                 }
-                                                echo number_format($totalPrice);
+                                                echo number_format($totalPrice); //ယူငွေ
                                             @endphp
                                         </b>ကျပ်
                                     </div>
@@ -79,7 +79,7 @@
                                             @endphp
                                             <span class=" text-muted"> {{ $result }} . . .</span>
                                         @else
-                                            <span class=" text-muted">No Note</span>
+                                            <span class=" text-muted">No Note</span> {{-- note --}}
                                         @endif
                                     </div>
                                 </div>
@@ -88,13 +88,13 @@
                                         <small class=" text-muted mt-2">
                                             {{-- {{ $order->created_at->diffForHumans() }} --}}
                                             @php
-                                                $time = $order->updated_at;
+                                                $time = $order->created_at;
                                                 $timeOut = $time->modify('+6 days')->format('Y-m-d H:i:s');
                                                 $now = date('Y-m-d H:i:s');
                                                 if ($now >= $timeOut) {
-                                                    echo $order->updated_at;
+                                                    echo $order->created_at;
                                                 } else {
-                                                    echo $order->updated_at->diffForHumans();
+                                                    echo $order->created_at->diffForHumans(); //date
                                                 }
                                             @endphp
                                         </small>
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                     @endforeach
-                    {{ $orders->links() }}
+                    {{ $orders->withQueryString()->links() }}
                 </div>
             </div>
             {{-- right --}}
@@ -136,6 +136,7 @@
                             <div class=" form-group mb-3">
                                 <label for="location">နေရပ် <span class=" text-danger">*</span></label>
                                 <select class="form-select form-control" name="location">
+                                    <option value="0">နေရပ်ရွေးရန်</option>
                                     @foreach ($villages as $village)
                                         <option value="{{ $village->id }}"
                                             @if (isset($location)) @if ($location == $village->id)

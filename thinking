@@ -1,0 +1,46 @@
+add -> လုပ်ရင် ထည့်
+	status = 1
+	order_id = lastInsertedId
+	cancled = 0
+	village_id = $village_id
+	name = $name
+	price = $price
+	owner_id = $owner_id
+	related_id = lastInsertedId
+	
+htet_yus
+	status = 2
+	order_id = $id
+	cancled = 0
+	village_id = $village_id
+	name = $name
+	price = price
+	owner_id = $owner_id
+	related_id = lastInsertedId
+	timestamps
+	
+interest
+	status = 3
+	order_id = $id
+	cancled = 0
+	village_id = $village_id
+	name = $name
+	price = $price
+	owner_id = $owner_id
+	related_id = lastInsertedId
+	timestamps
+	
+eduction
+	status = 4
+	order_id = $id
+	cancled = 0
+	village_id = $village_id
+	name = $name
+	price = $price
+	owner_id = $owner_id
+	related_id = lastInsertedId
+	timestamps
+
+ဖျက်လိုက်ရင် cnacled မှာပြောင်းရမယ်။
+
+edit လိုက်တဲ့ဟာတေွ

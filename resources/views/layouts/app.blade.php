@@ -36,9 +36,24 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
+                    @auth
+                        <ul class="navbar-nav me-auto">
+                            <li class=" nav-item">
+                                <a href="/" class=" nav-link">Home</a>
+                            </li>
+                            <li class=" nav-item">
+                                <a href="/histories" class=" nav-link">History</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Summary</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/summaries/daily">Daily Summary</a></li>
+                                    <li><a class="dropdown-item" href="/summaries/monthly">Monthly Summary</a></li>
+                                    <li><a class="dropdown-item" href="/summaries/yearly">Yearly Summary</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -69,8 +84,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>

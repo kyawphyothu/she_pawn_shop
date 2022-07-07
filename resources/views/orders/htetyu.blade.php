@@ -4,7 +4,10 @@
     <div class="container">
         <div class="card">
             <div class="card-header bg-primary bg-opacity-50">
-                <div class="card-title h4 text-black">ငွေထပ်ယူမည်</div>
+                <div class="card-title h4 text-black">
+                    ငွေထပ်ယူမည်
+                    <small class=" text-bold">({{ $order->owner->name }})</small>
+                </div>
             </div>
             <div class="card-body">
                 <form action="" method="POST">

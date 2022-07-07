@@ -4,23 +4,24 @@
     <div class="container">
 
         {{-- detail card --}}
+        {{-- main card --}}
         <div class=" row">
             <div class="col-12 col-sm-12 col-md-12 d-flex align-items-stretch flex-column mb-4">
                 <div class="card d-flex flex-fill mb-3">
                     <div class="card-body">
                         <div class=" card-title h5">
-                            <span class=" text-primary">{{ $order->name }}</span>
+                            <span class=" text-primary">{{ $order->name }}</span> {{-- name --}}
                             (<sapn class=" text-muted">
-                                {{ $order->village->name }}
+                                {{ $order->village->name }} {{-- village --}}
                             </sapn>)
                         </div>
                         <div class=" card-subtitle text-muted">
                             @foreach ($order->orderCategories as $orderCategory)
-                                {{ $orderCategory->category->name }}|
+                                {{ $orderCategory->category->name }}| {{-- category --}}
                             @endforeach
                         </div>
                         <div class=" text-muted">
-                            <b>{{ floor($order->weight / 128) }}</b>
+                            <b>{{ floor($order->weight / 128) }}</b> {{-- weight --}}
                             ကျပ်သား
                             <b>{{ floor(($order->weight % 128) / 8) }}</b>
                             ပဲ
@@ -34,21 +35,24 @@
                                     foreach ($order->htetYus as $htetYu) {
                                         $totalPrice += $htetYu->price;
                                     }
-                                    echo number_format($totalPrice);
+                                    echo number_format($totalPrice); //total price
                                 @endphp
                             </b>ကျပ်
                         </div>
                         <small class=" text-muted">
                             @php
-                                $time = $order->updated_at;
+                                $time = $order->created_at;
                                 $timeOut = $time->modify('+6 days')->format('Y-m-d H:i:s');
                                 $now = date('Y-m-d H:i:s');
                                 if ($now >= $timeOut) {
-                                    echo $order->updated_at;
+                                    echo $order->created_at;
                                 } else {
-                                    echo $order->updated_at->diffForHumans();
+                                    echo $order->created_at->diffForHumans(); //DATE
                                 }
                             @endphp
+                        </small><br>
+                        <small class=" text-primary">
+                            {{ $order->owner->name }} {{-- owner_name --}}
                         </small>
                         <a href="/orders/edit/{{ $order->id }}" class="btn btn-outline-primary float-end">Edit</a>
                     </div>
@@ -60,7 +64,7 @@
                             @endphp
                             <span class=" text-muted"> {{ $result }} . . .</span>
                         @else
-                            <span class=" text-muted">No Note</span>
+                            <span class=" text-muted">No Note</span> {{-- note --}}
                         @endif
                     </div>
                 </div>
@@ -78,7 +82,7 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     @if ($key > 0)
-                                        @if ($htetyu->pawn_id == 1)
+                                        @if ($htetyu->pawn_id == 1 && $order->pawn_id == 1)
                                             <a href="/htetyus/delete/{{ $htetyu->id }}"
                                                 onclick="return confirm('ထိုအချက်အလက်ကို အပြီးတိုင်ဖျက်ပစ်မည်ဖြစ်သည်။ သေချာပါသလား?')">
                                                 <i class="fa-solid fa-xmark text-danger float-end"></i>
@@ -131,7 +135,7 @@
                         @foreach ($order->payInterests as $key => $interest)
                             <div class="card mb-2">
                                 <div class=" card-body">
-                                    @if ($key == count($order->payInterests) - 1)
+                                    @if ($key == count($order->payInterests) - 1 && $order->pawn_id == 1)
                                         <a href="/interests/delete/{{ $interest->id }}"
                                             onclick="return confirm('ထိုအချက်အလက်ကို အပြီးတိုင်ဖျက်ပစ်မည်ဖြစ်သည်။ သေချာပါသလား?')">
                                             <i class="fa-solid fa-xmark text-danger float-end"></i>

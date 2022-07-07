@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('order_id');
+            $table->integer('owner_id');
             $table->integer('price');
             $table->integer('pawn_id')->default(1)->nullable(false);
             // $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

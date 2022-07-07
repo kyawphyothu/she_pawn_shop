@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('eductions', function (Blueprint $table) {
+        Schema::create('summaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
             $table->integer('owner_id');
-            $table->string('name');
-            $table->integer('price');
-            $table->integer('interest');
-            $table->integer('total');
-            $table->integer('paid');
-            $table->longText('note')->default('မှတ်ချက်မရှိသေးပါ');
+            $table->integer('in_price');
+            $table->integer('out_price');
+            $table->integer('diff_price');
+            $table->integer('profi_loss');
+            $table->integer('dmyearly');
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eductions');
+        Schema::dropIfExists('summaries');
     }
 };

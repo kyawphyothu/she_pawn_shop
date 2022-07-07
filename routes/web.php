@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HtetYuController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RateController;
+use App\Http\Controllers\SummaryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,3 +73,19 @@ Route::get('/interests/delete/{id}', [InterestController::class, 'delete']);
 //
 Route::get('/rates/update', [RateController::class, 'index']);
 Route::post('/rates/update', [RateController::class, 'change']);
+
+//history
+Route::get('/histories', [HistoryController::class, 'index']);
+
+///////////////////////////////summary
+//daily summary
+Route::get('/summaries/daily', [SummaryController::class, 'daily']);
+Route::post('/summaries/daily', [SummaryController::class, 'dailyCreate']);
+
+//monthly summary
+Route::get('/summaries/monthly', [SummaryController::class, 'monthly']);
+Route::post('/summaries/monthly', [SummaryController::class, 'monthlyCreate']);
+
+//yearly summary
+Route::get('/summaries/yearly', [SummaryController::class, 'yearly']);
+Route::post('/summaries/yearly', [SummaryController::class, 'yearlyCreate']);

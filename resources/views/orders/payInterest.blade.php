@@ -90,6 +90,7 @@
             <div class="card-header bg-primary bg-opacity-50">
                 <div class=" card-title h4 text-black">
                     အတိုးဆပ် လပြောင်းမည်
+                    <small class=" text-bold">({{ $order->owner->name }})</small>
                 </div>
             </div>
             <div class="card-body">

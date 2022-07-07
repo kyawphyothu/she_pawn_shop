@@ -92,6 +92,7 @@
             <div class="card-header bg-danger bg-opacity-70">
                 <div class=" card-title h4 text-black">
                     ရွေးမည်
+                    <small class="text-bold">({{ $order->owner->name }})</small>
                 </div>
             </div>
             <div class="card-body">

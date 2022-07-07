@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Eduction;
+use App\Models\History;
 use App\Models\HtetYu;
 use App\Models\Interest;
 use App\Models\Order;
@@ -84,7 +85,7 @@ class OrderController extends Controller
                 ->whereIn('order_categories.category_id', $request->category_id);
         }
 
-        if ($request->location) {
+        if ($request->location && $request->location > 0) {
             $orders->where('village_id', $request->location);
         }
 
@@ -165,8 +166,8 @@ class OrderController extends Controller
         }
 
         $lastInsertId = DB::getPdo()->lastInsertId();
-        //create order_product
 
+        //create order_product
         foreach ($category_id as $data) {
             $order_categories = new OrderCategory();
             $order_categories->order_id = $lastInsertId;
@@ -178,10 +179,25 @@ class OrderController extends Controller
         $htet_yus = new HtetYu();
         $htet_yus->name = $name;
         $htet_yus->order_id = $lastInsertId;
+        $htet_yus->owner_id = $owner_id;
         $htet_yus->price = $price;
         $htet_yus->created_at = $created_at;
         $htet_yus->updated_at = $created_at;
         $htet_yus->save();
+
+        //create history
+        $history = new History();
+        $history->status = 1;
+        $history->order_id = $lastInsertId;
+        $history->cancled = 0;
+        $history->village_id = $village_id;
+        $history->name = $name;
+        $history->price = $price;
+        $history->owner_id = $owner_id;
+        $history->related_id = $lastInsertId;
+        $history->created_at = $created_at;
+        $history->updated_at = $created_at;
+        $history->save();
 
         return redirect('/');
     }
@@ -216,14 +232,34 @@ class OrderController extends Controller
         $name = request()->name;
         $price = request()->price;
         $date = request()->datetime_local;
+        $village = Order::find($id)->village_id;
+        $owner = Order::find($id)->owner_id;
 
+        //htet yu
         $htetyu = new HtetYu();
         $htetyu->name = $name;
         $htetyu->order_id = $id;
+        $htetyu->owner_id = $owner;
         $htetyu->price = $price;
         $htetyu->created_at = $date;
         $htetyu->updated_at = $date;
         $htetyu->save();
+
+        $lastInsertId = DB::getPdo()->lastInsertId();
+
+        //history
+        $history = new History();
+        $history->status = 2;
+        $history->order_id = $id;
+        $history->cancled = 0;
+        $history->village_id = $village;
+        $history->name = $name;
+        $history->price = $price;
+        $history->owner_id = $owner;
+        $history->related_id = $lastInsertId;
+        $history->created_at = $date;
+        $history->updated_at = $date;
+        $history->save();
 
         return redirect("/orders/detail/$id");
     }
@@ -384,6 +420,8 @@ class OrderController extends Controller
         $paidInterest = request()->paidInterest;
         $changeMonth = request()->changeMonth;
         $paidMonth = request()->paidMonth;
+        $village = $order->village_id;
+        $owner = $order->owner_id;
 
         HtetYu::where('order_id', $id)
             ->where('pawn_id', 1)
@@ -400,14 +438,31 @@ class OrderController extends Controller
 
         $interest = new Interest();
         $interest->order_id = $id;
+        $interest->owner_id = $owner;
         $interest->name = $name;
         $interest->total_price = $totalPrice;
-        $interest->price_month = $priceMonth;
+        $interest->price_month = $priceMonth;   //price_month is ဆပ်မည့်အတိုးရဲ့ အရင်းတွေနဲ့ အရင်းတွေရဲ့ ယူထာားတဲဲ့လတွေကိုစုပေါင်းရေးထာတဲ့ logn text ဖြစ်ပါတယ်
         $interest->total_interest_price = $totalInterest;
         $interest->paid_interest_price = $paidInterest;
         $interest->created_at = $changeMonth;
         $interest->updated_at = $paidMonth;
         $interest->save();
+
+        $lastInsertId = DB::getPdo()->lastInsertId();
+
+        //created history
+        $history = new History();
+        $history->status = 3;
+        $history->order_id = $id;
+        $history->cancled = 0;
+        $history->village_id = $village;
+        $history->name = $name;
+        $history->price = $paidInterest;
+        $history->owner_id = $owner;
+        $history->related_id = $lastInsertId;
+        $history->created_at = $paidMonth;
+        $history->updated_at = $paidMonth;
+        $history->save();
 
         // return back();
         return redirect("/orders/detail/$id");
@@ -618,15 +673,20 @@ class OrderController extends Controller
         $day = request()->day;
         $note = request()->note;
 
-        //pawn_id to 2
         $order = Order::find($id);
+        //pawn_id to 2
         $order->pawn_id = 2;
         $order->save();
+        //owner_id
+        $owner_id = $order->owner_id;
+
+
 
         //create eduction table
         $eduction = new Eduction();
         if ($note) {
             $eduction->order_id = $id;
+            $eduction->owner_id = $owner_id;
             $eduction->name = $name;
             $eduction->price = $price;
             $eduction->interest = $interest;
@@ -637,6 +697,7 @@ class OrderController extends Controller
             $eduction->save();
         } else {
             $eduction->order_id = $id;
+            $eduction->owner_id = $owner_id;
             $eduction->name = $name;
             $eduction->price = $price;
             $eduction->interest = $interest;
@@ -645,6 +706,21 @@ class OrderController extends Controller
             $eduction->created_at = $day;
             $eduction->save();
         }
+
+        $lastInsertId = DB::getPdo()->lastInsertId();
+
+        $history = new History();
+        $history->status = 4;
+        $history->order_id = $id;
+        $history->cancled = 0;
+        $history->village_id = $order->village_id;
+        $history->name = $name;
+        $history->price = $paid;
+        $history->owner_id = $order->owner_id;
+        $history->related_id = $lastInsertId;
+        $history->created_at = $day;
+        $history->updated_at = $day;
+        $history->save();
 
 
         return redirect("/orders/detail/$id");

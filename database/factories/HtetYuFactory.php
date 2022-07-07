@@ -21,6 +21,7 @@ class HtetYuFactory extends Factory
             'order_id' => rand(1, 20),
             'price' => rand(100000, 2000000),
             'pawn_id' => 1,
+            'owner_id' => rand(1, 4),
         ];
     }
 }

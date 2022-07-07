@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('interests', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
+            $table->integer('owner_id');
             $table->string('name');
             $table->integer('total_price');
             $table->longText('price_month');
