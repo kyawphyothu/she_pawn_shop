@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {{-- logo --}}
+    <link rel="icon"
+        href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fw7.pngwing.com%2Fpngs%2F813%2F735%2Fpng-transparent-bird-of-prey-logo-beak-desktop-bird-animals-computer-logo.png&imgrefurl=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-kdfcc&tbnid=zy5ElKyyOVcfXM&vet=10CD8QMyiEAWoXChMI8Keplcfu-AIVAAAAAB0AAAAAEAI..i&docid=qIf7comBqaRy0M&w=920&h=900&q=logo&client=ubuntu&ved=0CD8QMyiEAWoXChMI8Keplcfu-AIVAAAAAB0AAAAAEAI" />
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

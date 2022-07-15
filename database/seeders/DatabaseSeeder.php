@@ -51,13 +51,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         //orders
-        Order::factory(20)->create();
+        // Order::factory(20)->create();
 
         //order_categories
-        OrderCategory::factory(50)->create();
+        // OrderCategory::factory(50)->create();
 
         //htetYus
-        HtetYu::factory(50)->create();
+        // HtetYu::factory(50)->create();
 
         //owner
         Owner::factory()->create([
