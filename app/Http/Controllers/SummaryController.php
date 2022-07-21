@@ -23,18 +23,22 @@ class SummaryController extends Controller
         $home = Summary::where('owner_id', 1)
             ->where('dmyearly', 0)
             ->orderBy('created_at', 'DESC')
+            ->take(90)
             ->get();
         $aye = Summary::where('owner_id', 2)
             ->where('dmyearly', 0)
             ->orderBy('created_at', 'DESC')
+            ->take(90)
             ->get();
         $san = Summary::where('owner_id', 3)
             ->where('dmyearly', 0)
             ->orderBy('created_at', 'DESC')
+            ->take(90)
             ->get();
         $ohmar = Summary::where('owner_id', 4)
             ->where('dmyearly', 0)
             ->orderBy('created_at', 'DESC')
+            ->take(90)
             ->get();
 
         return view('summaries.dailysummary', [
@@ -236,18 +240,22 @@ class SummaryController extends Controller
         $home = Summary::where('owner_id', 1)
             ->where('dmyearly', 1)
             ->orderBy('created_at', "DESC")
+            ->take(36)
             ->get();
         $aye = Summary::where('owner_id', 2)
             ->where('dmyearly', 1)
             ->orderBy('created_at', "DESC")
+            ->take(36)
             ->get();
         $san = Summary::where('owner_id', 3)
             ->where('dmyearly', 1)
             ->orderBy('created_at', "DESC")
+            ->take(36)
             ->get();
         $ohmar = Summary::where('owner_id', 4)
             ->where('dmyearly', 1)
             ->orderBy('created_at', "DESC")
+            ->take(36)
             ->get();
 
         return view('summaries.monthlysummary', [
@@ -466,15 +474,19 @@ class SummaryController extends Controller
     {
         $home = Summary::where('owner_id', 1)
             ->where('dmyearly', 2)
+            ->orderBy('created_at', "DESC")
             ->get();
         $aye = Summary::where('owner_id', 2)
             ->where('dmyearly', 2)
+            ->orderBy('created_at', "DESC")
             ->get();
         $san = Summary::where('owner_id', 3)
             ->where('dmyearly', 2)
+            ->orderBy('created_at', "DESC")
             ->get();
         $ohmar = Summary::where('owner_id', 4)
             ->where('dmyearly', 2)
+            ->orderBy('created_at', "DESC")
             ->get();
 
         return view('summaries.yearlysummary', [
@@ -494,7 +506,8 @@ class SummaryController extends Controller
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////yearly summary for home
         $monthlySummary1 = Summary::where('owner_id', 1) //for home
             ->where('dmyearly', 1)      //select month
-            ->whereBetween('created_at', [$staDate, $endDate]);
+            ->whereBetween('created_at', [$staDate, $endDate])
+            ->get();
 
         $in_price1 = 0;
         $out_price1 = 0;
@@ -505,7 +518,7 @@ class SummaryController extends Controller
             $in_price1 += $monthlySummary->in_price;
             $out_price1 += $monthlySummary->out_price;
         }
-
+        // dd($out_price1);
         //find prifit or lose or equal
         if ($in_price1 > $out_price1) {
             $diff_price1 = $in_price1 - $out_price1;
@@ -533,7 +546,8 @@ class SummaryController extends Controller
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////yearly summary for aye aye khaing
         $monthlySummary2 = Summary::where('owner_id', 2) //for aye aye khaing
             ->where('dmyearly', 1)      //select month
-            ->whereBetween('created_at', [$staDate, $endDate]);
+            ->whereBetween('created_at', [$staDate, $endDate])
+            ->get();
 
         $in_price2 = 0;
         $out_price2 = 0;
@@ -572,7 +586,8 @@ class SummaryController extends Controller
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////yearly summary for san san htwe
         $monthlySummary3 = Summary::where('owner_id', 3) //for san san htwe
             ->where('dmyearly', 1)      //select month
-            ->whereBetween('created_at', [$staDate, $endDate]);
+            ->whereBetween('created_at', [$staDate, $endDate])
+            ->get();
 
         $in_price3 = 0;
         $out_price3 = 0;
@@ -609,9 +624,10 @@ class SummaryController extends Controller
         $yearlySummary->save();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////yearly summary for ohmar win
-        $monthlySummary4 = Summary::where('owner_id', 4) //for home
+        $monthlySummary4 = Summary::where('owner_id', 4) //for ohmarwin
             ->where('dmyearly', 1)      //select month
-            ->whereBetween('created_at', [$staDate, $endDate]);
+            ->whereBetween('created_at', [$staDate, $endDate])
+            ->get();
 
         $in_price4 = 0;
         $out_price4 = 0;

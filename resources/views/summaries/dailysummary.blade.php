@@ -33,21 +33,22 @@
                             {{-- looped data --}}
                             @foreach ($home as $home)
                                 <li class="list-group-item">
+                                    {{-- date time --}}
                                     <h6>
                                         @php
                                             echo date('Y-m-d', strtotime($home->created_at));
                                         @endphp
                                     </h6>
-                                    <span class=" text-success">{{ $home->in_price }}</span>
-                                    <span class=" text-danger">{{ $home->out_price }}</span>
+                                    <span class=" text-success">{{ $home->in_price }}</span> {{-- income --}}
+                                    <span class=" text-danger">{{ $home->out_price }}</span> {{-- outcome --}}
                                     <h5
                                         class=" float-end @if ($home->profi_loss == 0) text-danger
                                         @elseif ($home->profi_loss == 1)
                                         text-default
                                         @elseif ($home->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $home->diff_price }}
-                                    </h5>
+                                    </h5> {{-- profit or loss --}}
                                 </li>
                             @endforeach
                         </ul>
@@ -73,7 +74,7 @@
                                         @elseif ($aye->profi_loss == 1)
                                         text-default
                                         @elseif ($aye->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $aye->diff_price }}
                                     </h5>
                                 </li>
@@ -101,7 +102,7 @@
                                         @elseif ($san->profi_loss == 1)
                                         text-default
                                         @elseif ($san->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $san->diff_price }}
                                     </h5>
                                 </li>
@@ -129,7 +130,7 @@
                                         @elseif ($ohmar->profi_loss == 1)
                                         text-default
                                         @elseif ($ohmar->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $ohmar->diff_price }}
                                     </h5>
                                 </li>

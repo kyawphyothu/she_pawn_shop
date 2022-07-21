@@ -91,8 +91,7 @@
                                     @endif
                                     <div class=" card-title text-primary">{{ $htetyu->name }}</div>
                                     <div class=" text-bold text-success">{{ number_format($htetyu->price) }}</div>
-                                    <div
-                                        class=" card-text @if ($htetyu->pawn_id == 1) {{ 'text-danger' }} @endif ">
+                                    <div class=" card-text @if ($htetyu->pawn_id == 1) {{ 'text-danger' }} @endif ">
                                         @php
                                             $time = $htetyu->created_at;
                                             $timeOut = $time->modify('+1 days')->format('Y-m-d H:i:s');
@@ -148,8 +147,7 @@
                                     <span class="text-success">{{ number_format($interest->total_price) }}</span>| --}}
                                     <div class="text-success">{{ $interest->price_month }}</div>
                                     အတိုးစုစုပေါင်း
-                                    <span
-                                        class="text-success">{{ number_format($interest->total_interest_price) }}</span>
+                                    <span class="text-success">{{ number_format($interest->total_interest_price) }}</span>
                                     ထဲမှ
                                     <span class="text-success">{{ number_format($interest->paid_interest_price) }}</span>
                                     ဆပ်၍
@@ -190,6 +188,7 @@
                 class="btn btn-primary @if ($order->pawn_id == 2) disabled @endif">ထပ်ယူ</a>
             <a href="/orders/payinterest/{{ $order->id }}"
                 class="btn btn-primary @if ($order->pawn_id == 2) disabled @endif">အတိုးဆပ်</a>
+
             <a href="/orders/eduction/{{ $order->id }}"
                 class="btn btn-danger @if ($order->pawn_id == 2) disabled @endif">
                 @if ($order->pawn_id == 1)
@@ -198,6 +197,7 @@
                     ရွေးပြီးပါပြီ
                 @endif
             </a>
+            <button class=" btn btn-outline-info" onclick="history.back()">Back</button>
             <a href="/" class="btn btn-outline-secondary">Home</a>
         </div>
     </div>

@@ -45,7 +45,7 @@
                                         @elseif ($home->profi_loss == 1)
                                         text-default
                                         @elseif ($home->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $home->diff_price }}
                                     </h5>
                                 </li>
@@ -73,7 +73,7 @@
                                         @elseif ($aye->profi_loss == 1)
                                         text-default
                                         @elseif ($aye->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $aye->diff_price }}
                                     </h5>
                                 </li>
@@ -101,7 +101,7 @@
                                         @elseif ($san->profi_loss == 1)
                                         text-default
                                         @elseif ($san->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $san->diff_price }}
                                     </h5>
                                 </li>
@@ -129,7 +129,7 @@
                                         @elseif ($ohmar->profi_loss == 1)
                                         text-default
                                         @elseif ($ohmar->profi_loss == 2)
-                                        text-succes @endif">
+                                        text-success @endif">
                                         {{ $ohmar->diff_price }}
                                     </h5>
                                 </li>

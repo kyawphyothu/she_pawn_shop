@@ -14,7 +14,7 @@ class HistoryController extends Controller
 
     public function index()
     {
-        $histories = History::latest()->get();
+        $histories = History::latest()->take(300)->get();
 
         return view('histories.history', [
             'histories' => $histories,
