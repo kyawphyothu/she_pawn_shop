@@ -14,16 +14,32 @@
                     @csrf
                     <div class="form-group mb-3">
                         <label for="">အမည်</label>
-                        <input type="text" name="name" class=" form-control" value="{{ $order->name }}">
+                        <input type="text" name="name" class=" form-control"
+                            value="{{ old('name') ? old('name') : $order->name }}">
+                        @if ($errors->has('name'))
+                            <div class="text-danger">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group mb-3">
                         <label for="">ထပ်ယူငွေ</label>
-                        <input type="number" min="1000" step="1000" class=" form-control" name="price">
+                        <input type="number" min="1000" class=" form-control" name="price">
+                        @if ($errors->has('price'))
+                            <div class="text-danger">
+                                {{ $errors->first('price') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group mb-3">
                         <label for="">ရက်စွဲ</label><br>
                         <input type="datetime-local" name="datetime_local" id="" class="form-control"
-                            value="{{ date('Y-m-d H:i:s') }}">
+                            value="{{ old('datetime_local') ? old('datetime_local') : date('Y-m-d H:i:s') }}">
+                        @if ($errors->has('datetime_local'))
+                            <div class="text-danger">
+                                {{ $errors->first('datetime_local') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group mb-3 float-end">
                         <input type="submit" name="" id="" class=" btn btn-success" value="အတည်ပြုမည်">

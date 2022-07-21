@@ -101,31 +101,56 @@
                     <div class="mb-3">
                         <label for="">နာမည်</label>
                         <input type="text" placeholder="အမည်ထည့်ပါ" name="name" class=" form-control"
-                            value="{{ $order->name }}" required>
+                            value="{{ old('name') ? old('name') : $order->name }}">
+                        @if ($errors->has('name'))
+                            <div class="text-danger">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label for="">အတိုးစုစုပေါင်း</label>
-                        <input type="number" step="1000" name="totalInterest" class=" form-control"
-                            value="{{ $totalInterest }}" required>
+                        <input type="number" name="totalInterest" class=" form-control"
+                            value="{{ old('totalInterest') ? old('totalInterest') : $totalInterest }}">
+                        @if ($errors->has('totalInterest'))
+                            <div class="text-danger">
+                                {{ $errors->first('totalInterest') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3">
                         <div class="row">
                             <div class="col-6">
                                 <label for="" class=" text-success">ပေးဆပ်မည့် အတိုး</label>
-                                <input type="number" step="1000" name="paidInterest" class=" form-control col-6"
-                                    required>
+                                <input type="number" name="paidInterest" class=" form-control col-6"
+                                    value="{{ old('paidInterest') }}">
+                                @if ($errors->has('paidInterest'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('paidInterest') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-6">
                                 <label for="" class=" text-success">ပြောင်းလဲမည့် လ</label>
                                 <input type="datetime-local" class=" form-control" name="changeMonth"
-                                    value="{{ date('Y-m-d H:i:s') }}">
+                                    value="{{ old('changeMonth') ? old('changeMonth') : date('Y-m-d H:i:s') }}">
+                                @if ($errors->has('changeMonth'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('changeMonth') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="">အတိုးလာဆပ်သည့်ရက်</label>
                         <input type="datetime-local" name="paidMonth" id="" class="form-control"
-                            value="{{ date('Y-m-d H:i:s') }}">
+                            value="{{ old('paidMonth') ? old('paidMonth') : date('Y-m-d H:i:s') }}">
+                        @if ($errors->has('paidMonth'))
+                            <div class="text-danger">
+                                {{ $errors->first('paidMonth') }}
+                            </div>
+                        @endif
                     </div>
 
                     <div class="form-group mb-3 float-end">

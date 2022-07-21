@@ -101,38 +101,68 @@
                     <div class="mb-3">
                         <label for="">နာမည်</label>
                         <input type="text" placeholder="အမည်ထည့်ပါ" name="name" class=" form-control"
-                            value="{{ $order->name }}" required>
+                            value="{{ old('name') ? old('name') : $order->name }}">
+                        @if ($errors->has('name'))
+                            <div class="text-danger">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="mb-3 col-6">
                             <label for="" class="text-muted">အရင်း</label>
-                            <input type="number" name="price" class=" form-control" value="{{ $totalPrice }}"
-                                required>
+                            <input type="number" name="price" class=" form-control"
+                                value="{{ old('price') ? old('price') : $totalPrice }}">
+                            @if ($errors->has('price'))
+                                <div class="text-danger">
+                                    {{ $errors->first('price') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="mb-3 col-6">
                             <label for="">အတိုး</label>
-                            <input type="number" name="interest" class=" form-control" value="{{ $totalInterest }}"
-                                required>
+                            <input type="number" name="interest" class=" form-control"
+                                value="{{ old('interest') ? old('interest') : $totalInterest }}">
+                            @if ($errors->has('interest'))
+                                <div class="text-danger">
+                                    {{ $errors->first('interest') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="">အတိုး + အရင်း</label>
                         <input type="number" name="total" class=" form-control"
-                            value="{{ round($totalInterest + $totalPrice, -2) }}" required>
+                            value="{{ old('total') ? old('total') : round($totalInterest + $totalPrice, -2) }}">
+                        @if ($errors->has('total'))
+                            <div class="text-danger">
+                                {{ $errors->first('total') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label for="" class=" text-success">ပေးဆပ်သည့် တိုး+ရင်း</label>
-                        <input type="number" name="paid" class=" form-control col-6" required>
+                        <input type="number" name="paid" class=" form-control col-6" value="{{ old('paid') }}">
+                        @if ($errors->has('paid'))
+                            <div class="text-danger">
+                                {{ $errors->first('paid') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label for="">လာရွေးသည့်ရက်</label>
                         <input type="datetime-local" name="day" id="" class="form-control"
-                            value="{{ date('Y-m-d H:i:s') }}">
+                            value="{{ old('day') ? old('day') : date('Y-m-d H:i:s') }}">
+                        @if ($errors->has('day'))
+                            <div class="text-danger">
+                                {{ $errors->first('day') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3">
                         <label for="" class="">မှတ်ချက်</label>
                         <textarea name="note" id="" cols="30" rows="10" class=" form-control"
-                            placeholder="မှတ်ချက်ရေးရန်"></textarea>
+                            placeholder="မှတ်ချက်ရေးရန်">{{ old('note') }}</textarea>
                     </div>
 
                     <div class="form-group mb-3 float-end">

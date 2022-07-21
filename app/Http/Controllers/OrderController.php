@@ -130,6 +130,20 @@ class OrderController extends Controller
     //create new order
     public function create()
     {
+
+        $validator = validator(request()->all(), [
+            'name' => 'required',
+            'village_id' => 'required',
+            'category_id' => 'required',
+            'price' => 'required',
+            'owner_id' => 'required',
+            'datetime_local' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $name = request()->name;
         $village_id = request()->village_id;
         $category_id = request()->category_id;
@@ -228,6 +242,17 @@ class OrderController extends Controller
     //htet yu create
     public function htetyuCreate($id)
     {
+
+        $validator = validator(request()->all(), [
+            'name' => "required",
+            'price' => 'required',
+            'datetime_local' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $id = $id;
         $name = request()->name;
         $price = request()->price;
@@ -411,6 +436,18 @@ class OrderController extends Controller
     //paid interest
     public function paidInterest($id)
     {
+
+        $validator = validator(request()->all(), [
+            'name' => 'required',
+            'totalInterest' => 'required',
+            'paidInterest' => 'required',
+            'changeMonth' => 'required',
+            'paidMonth' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $order = Order::find($id);
 
         $name = request()->name;
@@ -487,6 +524,19 @@ class OrderController extends Controller
     //edit updated
     public function update($id)
     {
+
+        $validator = validator(request()->all(), [
+            'name' => 'required',
+            'village_id' => 'required',
+            'category_id' => 'required',
+            'price' => 'required',
+            'owner_id' => 'required',
+            'datetime_local' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $order  = Order::find($id);
         $htet_yu = HtetYu::where('order_id', $id)->first();
 
@@ -665,6 +715,19 @@ class OrderController extends Controller
 
     public function educt($id)
     {
+
+        $validator = validator(request()->all(), [
+            'name' => 'required',
+            'price' => 'required',
+            'interest' => 'required',
+            'total' => 'required',
+            'paid' => 'required',
+            'day' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $name = request()->name;
         $price = request()->price;
         $interest = request()->interest;

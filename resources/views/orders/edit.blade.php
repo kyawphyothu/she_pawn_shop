@@ -15,7 +15,12 @@
                     <div class="my-3">
                         <label for="">နာမည်</label>
                         <input type="text" placeholder="အမည်ထည့်ပါ" name="name" class=" form-control"
-                            value="{{ $order->name }}" required>
+                            value="{{ old('name') ? old('name') : $order->name }}">
+                        @if ($errors->has('name'))
+                            <div class="text-danger">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
                     </div>
                     <div class=" form-group mb-3">
                         <label for="village">နေရပ်</label>
@@ -26,6 +31,11 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('village_id'))
+                            <div class="text-danger">
+                                {{ $errors->first('village_id') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="">ပစ္စည်း အမျိုးအစား</label>
@@ -41,15 +51,21 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="{{ $i }}"
                                         name="category_id[]" value="{{ $category->id }}"
-                                        @if (in_array($category->id, $orderCategoryArr)) checked @endif>
-                                    <label class="form-check-label"
-                                        for="{{ $i }}">{{ $category->name }}</label>
+                                        @if (old('category_id')) @if (in_array($category->id, old('category_id')))
+                                            checked @endif
+                                    @elseif (in_array($category->id, $orderCategoryArr)) checked @endif>
+                                    <label class="form-check-label" for="{{ $i }}">{{ $category->name }}</label>
                                 </div>
                                 @php
                                     $i++;
                                 @endphp
                             @endforeach
                         </div>
+                        @if ($errors->has('category_id'))
+                            <div class="text-danger">
+                                {{ $errors->first('category_id') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group mb-3">
                         @php
@@ -63,21 +79,23 @@
                             <div class="col">
                                 <div class="input-group">
                                     <input type="number" class="form-control" name="weightKyat"
-                                        value="{{ $kyat_weight }}" min="0">
+                                        value="{{ old('weightKyat') ? old('weightKyat') : $kyat_weight }}" min="0">
                                     <span class=" input-group-text">ကျပ်သား</span>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="weightPae" value="{{ $pae_weight }}"
-                                        max="15" min="0">
+                                    <input type="number" class="form-control" name="weightPae"
+                                        value="{{ old('weightPae') ? old('weightPae') : $pae_weight }}" max="15"
+                                        min="0">
                                     <span class=" input-group-text">ပဲ</span>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="weightYwe" value="{{ $ywe_weight }}"
-                                        max="7" min="0">
+                                    <input type="number" class="form-control" name="weightYwe"
+                                        value="{{ old('weightYwe') ? old('weightYwe') : $ywe_weight }}" max="7"
+                                        min="0">
                                     <span class=" input-group-text">ရွေး</span>
                                 </div>
                             </div>
@@ -88,9 +106,14 @@
                         <label for="">ယူငွေ</label>
                         <div class="input-group">
                             <input type="number" name="price" class=" form-control" min="1000"
-                                value="{{ $order->htetYus[0]->price }}">
+                                value="{{ old('price') ? old('price') : $order->htetYus[0]->price }}">
                             <span class=" input-group-text">ကျပ်</span>
                         </div>
+                        @if ($errors->has('price'))
+                            <div class="text-danger">
+                                {{ $errors->first('price') }}
+                            </div>
+                        @endif
                     </div>
                     <div class=" form-group mb-3">
                         <label for="location">လက်ခံသူ</label>
@@ -100,16 +123,26 @@
                                     {{ $owner->name }}</option>
                             @endforeach
                         </select>
+                        @if ($errors->has('owner_id'))
+                            <div class="text-danger">
+                                {{ $errors->first('owner_id') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group mb-3">
                         <label for="">ရက်စွဲ</label><br>
                         <input type="datetime-local" name="datetime_local" id="" class="form-control"
-                            value="{{ $order->created_at }}">
+                            value="{{ old('datetime_local') ? old('datetime_local') : $order->created_at }}">
+                        @if ($errors->has('datetime_local'))
+                            <div class="text-danger">
+                                {{ $errors->first('datetime_local') }}
+                            </div>
+                        @endif
                     </div>
                     <div class=" form-group mb-3">
                         <label for="">မှတ်ချက်</label>
                         <textarea name="note" id="" cols="30" rows="5" class=" form-control"
-                            placeholder="မှတ်ချက်ရေးရန်...">{{ $order->note }}</textarea>
+                            placeholder="မှတ်ချက်ရေးရန်...">{{ old('note') ? old('note') : $order->note }}</textarea>
                     </div>
 
                     <div class="form-group float-end">
