@@ -42,15 +42,17 @@
                                             echo date('Y-m-d', strtotime($home->created_at));
                                         @endphp
                                     </h6>
-                                    <span class=" text-success">{{ $home->in_price }}</span> {{-- income --}}
-                                    <span class=" text-danger">{{ $home->out_price }}</span> {{-- outcome --}}
+                                    <span class=" text-success">{{ number_format($home->in_price) }}</span>
+                                    {{-- income --}}
+                                    <span class=" text-danger">{{ number_format($home->out_price) }}</span>
+                                    {{-- outcome --}}
                                     <h5
                                         class=" float-end @if ($home->profi_loss == 0) text-danger
                                         @elseif ($home->profi_loss == 1)
                                         text-default
                                         @elseif ($home->profi_loss == 2)
                                         text-success @endif">
-                                        {{ $home->diff_price }}
+                                        {{ number_format($home->diff_price) }}
                                     </h5> {{-- profit or loss --}}
                                 </li>
                             @endforeach
@@ -70,15 +72,15 @@
                                             echo date('Y-m-d', strtotime($aye->created_at));
                                         @endphp
                                     </h6>
-                                    <span class=" text-success">{{ $aye->in_price }}</span>
-                                    <span class=" text-danger">{{ $aye->out_price }}</span>
+                                    <span class=" text-success">{{ number_format($aye->in_price) }}</span>
+                                    <span class=" text-danger">{{ number_format($aye->out_price) }}</span>
                                     <h5
                                         class=" float-end @if ($aye->profi_loss == 0) text-danger
                                         @elseif ($aye->profi_loss == 1)
                                         text-default
                                         @elseif ($aye->profi_loss == 2)
                                         text-success @endif">
-                                        {{ $aye->diff_price }}
+                                        {{ number_format($aye->diff_price) }}
                                     </h5>
                                 </li>
                             @endforeach
@@ -98,15 +100,15 @@
                                             echo date('Y-m-d', strtotime($san->created_at));
                                         @endphp
                                     </h6>
-                                    <span class=" text-success">{{ $san->in_price }}</span>
-                                    <span class=" text-danger">{{ $san->out_price }}</span>
+                                    <span class=" text-success">{{ number_format($san->in_price) }}</span>
+                                    <span class=" text-danger">{{ number_format($san->out_price) }}</span>
                                     <h5
                                         class=" float-end @if ($san->profi_loss == 0) text-danger
                                         @elseif ($san->profi_loss == 1)
                                         text-default
                                         @elseif ($san->profi_loss == 2)
                                         text-success @endif">
-                                        {{ $san->diff_price }}
+                                        {{ number_format($san->diff_price) }}
                                     </h5>
                                 </li>
                             @endforeach
@@ -126,15 +128,15 @@
                                             echo date('Y-m-d', strtotime($ohmar->created_at));
                                         @endphp
                                     </h6>
-                                    <span class=" text-success">{{ $ohmar->in_price }}</span>
-                                    <span class=" text-danger">{{ $ohmar->out_price }}</span>
+                                    <span class=" text-success">{{ number_format($ohmar->in_price) }}</span>
+                                    <span class=" text-danger">{{ number_format($ohmar->out_price) }}</span>
                                     <h5
                                         class=" float-end @if ($ohmar->profi_loss == 0) text-danger
                                         @elseif ($ohmar->profi_loss == 1)
                                         text-default
                                         @elseif ($ohmar->profi_loss == 2)
                                         text-success @endif">
-                                        {{ $ohmar->diff_price }}
+                                        {{ number_format($ohmar->diff_price) }}
                                     </h5>
                                 </li>
                             @endforeach
