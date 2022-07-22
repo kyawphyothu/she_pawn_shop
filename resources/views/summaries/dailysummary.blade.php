@@ -9,8 +9,11 @@
                 <div class="col-6">
                     <input type="date" name="date" id="" class=" form-control" value="{{ date('Y-m-d') }}">
                 </div>
-                <div class="col-6">
-                    <input type="submit" value="Create Daily Summary" class=" form-control btn btn-primary">
+                <div class="col-3">
+                    <input type="submit" name="action" value="CreateDailySummary" class=" form-control btn btn-primary">
+                </div>
+                <div class="col-3">
+                    <input type="submit" name="action" value="DeleteDailySummary" class=" form-control btn btn-danger">
                 </div>
             </div>
         </form>

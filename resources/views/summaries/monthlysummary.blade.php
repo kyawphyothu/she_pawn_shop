@@ -9,8 +9,11 @@
                 <div class="col-6">
                     <input type="month" name="date" id="" class=" form-control" value="{{ date('Y-m') }}">
                 </div>
-                <div class="col-6">
-                    <input type="submit" value="Create Monthly Summary" class=" form-control btn btn-primary">
+                <div class="col-3">
+                    <input type="submit" name="action" value="CreateMonthlySummary" class=" form-control btn btn-primary">
+                </div>
+                <div class="col-3">
+                    <input type="submit" name="action" value="DeleteMonthlySummary" class=" form-control btn btn-danger">
                 </div>
             </div>
         </form>

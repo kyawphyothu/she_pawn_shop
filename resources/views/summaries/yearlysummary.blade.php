@@ -10,8 +10,11 @@
                     <input type="number" name="date" min="2000" max="3000" class=" form-control"
                         value="{{ date('Y') }}">
                 </div>
-                <div class="col-6">
-                    <input type="submit" value="Create Yearly Summary" class=" form-control btn btn-primary">
+                <div class="col-3">
+                    <input type="submit" name="action" value="CreateYearlySummary" class=" form-control btn btn-primary">
+                </div>
+                <div class="col-3">
+                    <input type="submit" name="action" value="DeleteYearlySummary" class=" form-control btn btn-danger">
                 </div>
             </div>
         </form>
