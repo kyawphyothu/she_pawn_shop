@@ -197,7 +197,7 @@
                     ရွေးပြီးပါပြီ
                 @endif
             </a>
-            <button class=" btn btn-outline-info" onclick="history.back()">Back</button>
+            {{-- <button class=" btn btn-outline-info" onclick="history.back()">Back</button> --}}
             <a href="/" class="btn btn-outline-secondary">Home</a>
         </div>
     </div>
