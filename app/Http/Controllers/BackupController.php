@@ -28,6 +28,8 @@ class BackupController extends Controller
             $backup->name = $lastInsertedFileName;
             $backup->size = $lastInsertedFileSize;
             $backup->save();
+        }else{
+            $result = 'Error! Cannot Backup';
         }
 
         return back()->with('info', $result);
