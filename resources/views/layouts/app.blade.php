@@ -56,6 +56,9 @@
                                     <li><a class="dropdown-item" href="/summaries/yearly">Yearly Summary</a></li>
                                 </ul>
                             </li>
+                            <li class=" nav-item">
+                                <a href="/backups" class=" nav-link">BackupDatabase</a>
+                            </li>
                         </ul>
                     @endauth
 

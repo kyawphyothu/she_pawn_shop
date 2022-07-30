@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HtetYuController;
 use App\Http\Controllers\InterestController;
@@ -89,3 +90,9 @@ Route::post('/summaries/monthly', [SummaryController::class, 'monthlyCreate']);
 //yearly summary
 Route::get('/summaries/yearly', [SummaryController::class, 'yearly']);
 Route::post('/summaries/yearly', [SummaryController::class, 'yearlyCreate']);
+
+
+//Backup
+Route::get('/backups', [BackupController::class, 'index']);
+Route::post('/backups', [BackupController::class, 'store']);
+Route::get('/backups/delete/{id}', [BackupController::class, 'destory']);
