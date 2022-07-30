@@ -20,13 +20,15 @@ class BackupController extends Controller
     {
         $result = exec('cd .. && php artisan config:clear && php artisan backup:run --only-db ');
 
-        $lastInsertedFileName = exec('cd storage/shepawnshop && ls -1t |head -1');
-        $lastInsertedFileSize = number_format((filesize("storage/shepawnshop/$lastInsertedFileName")/1048576), 2);
+        if($result == 'Backup completed!'){
+            $lastInsertedFileName = exec('cd storage/shepawnshop && ls -1t |head -1');
+            $lastInsertedFileSize = number_format((filesize("storage/shepawnshop/$lastInsertedFileName")/1048576), 2);
 
-        $backup = new Backup();
-        $backup->name = $lastInsertedFileName;
-        $backup->size = $lastInsertedFileSize;
-        $backup->save();
+            $backup = new Backup();
+            $backup->name = $lastInsertedFileName;
+            $backup->size = $lastInsertedFileSize;
+            $backup->save();
+        }
 
         return back()->with('info', $result);
     }
