@@ -132,7 +132,7 @@
                     <div class="form-group mb-3">
                         <label for="">ရက်စွဲ</label><br>
                         <input type="datetime-local" name="datetime_local" id="" class="form-control"
-                            value="{{ old('datetime_local') ? old('datetime_local') : $order->created_at }}">
+                            value="{{ old('datetime_local') ? old('datetime_local') : $order->created_at }}" step="1">
                         @if ($errors->has('datetime_local'))
                             <div class="text-danger">
                                 {{ $errors->first('datetime_local') }}
