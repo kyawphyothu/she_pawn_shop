@@ -70,21 +70,21 @@
                     <label for="">အလေးချိန်</label>
                     <div class="col">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="weightKyat" min="0"
+                            <input type="number" class="form-control" name="weightKyat"
                                 value="{{ old('weightKyat') ? old('weightKyat') : 0 }}">
                             <span class=" input-group-text">ကျပ်သား</span>
                         </div>
                     </div>
                     <div class="col">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="weightPae" max="15" min="0"
+                            <input type="number" class="form-control" name="weightPae"
                                 value="{{ old('weightPae') ? old('weightPae') : 0 }}">
                             <span class=" input-group-text">ပဲ</span>
                         </div>
                     </div>
                     <div class="col">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="weightYwe" max="7" min="0"
+                            <input type="number" class="form-control" name="weightYwe"
                                 value="{{ old('weightYwe') ? old('weightYwe') : 0 }}">
                             <span class=" input-group-text">ရွေး</span>
                         </div>
