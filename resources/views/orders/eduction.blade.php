@@ -152,7 +152,7 @@
                     <div class="mb-3">
                         <label for="">လာရွေးသည့်ရက်</label>
                         <input type="datetime-local" name="day" id="" class="form-control"
-                            value="{{ old('day') ? old('day') : date('Y-m-d H:i:s') }}">
+                            value="{{ old('day') ? old('day') : date('Y-m-d H:i:s') }}" step="1">
                         @if ($errors->has('day'))
                             <div class="text-danger">
                                 {{ $errors->first('day') }}

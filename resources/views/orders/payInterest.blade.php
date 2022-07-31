@@ -133,7 +133,7 @@
                             <div class="col-6">
                                 <label for="" class=" text-success">ပြောင်းလဲမည့် လ</label>
                                 <input type="datetime-local" class=" form-control" name="changeMonth"
-                                    value="{{ old('changeMonth') ? old('changeMonth') : date('Y-m-d H:i:s') }}">
+                                    value="{{ old('changeMonth') ? old('changeMonth') : date('Y-m-d H:i:s') }}" step="1">
                                 @if ($errors->has('changeMonth'))
                                     <div class="text-danger">
                                         {{ $errors->first('changeMonth') }}
@@ -145,7 +145,7 @@
                     <div class="mb-3">
                         <label for="">အတိုးလာဆပ်သည့်ရက်</label>
                         <input type="datetime-local" name="paidMonth" id="" class="form-control"
-                            value="{{ old('paidMonth') ? old('paidMonth') : date('Y-m-d H:i:s') }}">
+                            value="{{ old('paidMonth') ? old('paidMonth') : date('Y-m-d H:i:s') }}" step="1">
                         @if ($errors->has('paidMonth'))
                             <div class="text-danger">
                                 {{ $errors->first('paidMonth') }}
