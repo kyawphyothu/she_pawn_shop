@@ -121,7 +121,7 @@
             <div class="form-group mb-3">
                 <label for="">ရက်စွဲ</label><br>
                 <input type="datetime-local" name="datetime_local" id="" class="form-control"
-                    value="{{ date('Y-m-d H:i:s') }}">
+                    value="{{ date('Y-m-d H:i:s') }}" step="1">
                 @if ($errors->has('datetime_local'))
                     <div class="text-danger">
                         {{ $errors->first('datetime_local') }}
