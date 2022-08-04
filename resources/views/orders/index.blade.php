@@ -72,14 +72,14 @@
                                         </b>ကျပ်
                                     </div>
                                     <div class=" card-text">
-                                        @if ($order->note)
+                                        @if ($order->note != 'မှတ်ချက်မရှိသေးပါ')
                                             @php
                                                 $note = $order->note;
                                                 $result = Str::substr($note, 0, 50);
                                             @endphp
-                                            <span class=" text-muted"> {{ $result }} . . .</span>
+                                            <span class=" text-muted"> {{ $result }} @if(strlen($note) > 50) . . .  @endif</span>
                                         @else
-                                            <span class=" text-muted">No Note</span> {{-- note --}}
+                                            <span class=" text-muted">မှတ်ချက်မရှိသေးပါ</span> {{-- note --}}
                                         @endif
                                     </div>
                                 </div>
