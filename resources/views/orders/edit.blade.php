@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">ပစ္စည်း အမျိုးအစား</label>
-                        <div class="mb-3 d-flex flex-fill justify-content-between">
+                        <div class="mb-3 d-flex flex-wrap justify-content-between">
                             @php
                                 $i = 1;
                                 $orderCategoryArr = [];
@@ -76,14 +76,14 @@
                         @endphp
                         <div class="row">
                             <label for="">အလေးချိန်</label>
-                            <div class="col">
+                            <div class="col-12 col-lg-4 mb-1 mb-lg-0">
                                 <div class="input-group">
                                     <input type="number" class="form-control" name="weightKyat"
                                         value="{{ old('weightKyat') ? old('weightKyat') : $kyat_weight }}" min="0">
                                     <span class=" input-group-text">ကျပ်သား</span>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6 col-lg-4">
                                 <div class="input-group">
                                     <input type="number" class="form-control" name="weightPae"
                                         value="{{ old('weightPae') ? old('weightPae') : $pae_weight }}" max="15"
@@ -91,7 +91,7 @@
                                     <span class=" input-group-text">ပဲ</span>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6 col-lg-4">
                                 <div class="input-group">
                                     <input type="number" class="form-control" name="weightYwe"
                                         value="{{ old('weightYwe') ? old('weightYwe') : $ywe_weight }}" max="7"
