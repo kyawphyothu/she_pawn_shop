@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('owner_id');
             $table->integer('weight');
             // $table->integer('price');
-            $table->longText('note')->default('မှတ်ချက်မရှိသေးပါ');
+            $table->longText('note');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             // $table->timestamps();
