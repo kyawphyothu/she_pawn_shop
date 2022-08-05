@@ -57,14 +57,10 @@
                         <a href="/orders/edit/{{ $order->id }}" class="btn btn-outline-primary float-end">Edit</a>
                     </div>
                     <div class="card-footer">
-                        @if ($order->note)
-                            @php
-                                $note = $order->note;
-                                $result = Str::substr($note, 0, 50);
-                            @endphp
-                            <span class=" text-muted"> {{ $result }} . . .</span>
+                        @if ($order->note && $order->note != 'မှတ်ချက်မရှိသေးပါ')
+                            <span class=" text-muted">{{ $order->note }}</span>
                         @else
-                            <span class=" text-muted">No Note</span> {{-- note --}}
+                            <span class=" text-muted">မှတ်ချက်မရှိသေးပါ</span> {{-- note --}}
                         @endif
                     </div>
                 </div>

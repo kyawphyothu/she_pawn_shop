@@ -72,7 +72,7 @@
                                         </b>ကျပ်
                                     </div>
                                     <div class=" card-text">
-                                        @if ($order->note != 'မှတ်ချက်မရှိသေးပါ')
+                                        @if ($order->note && $order->note != 'မှတ်ချက်မရှိသေးပါ')
                                             @php
                                                 $note = $order->note;
                                                 $result = Str::substr($note, 0, 50);
