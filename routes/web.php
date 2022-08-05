@@ -7,6 +7,7 @@ use App\Http\Controllers\InterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\SummaryController;
+use App\Http\Controllers\VillageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +58,7 @@ Route::post('/orders/htetyu/{id}', [OrderController::class, 'htetyuCreate']);
 Route::get('/orders/payinterest/{id}', [OrderController::class, 'payInterest']);
 Route::post('/orders/payinterest/{id}', [OrderController::class, 'paidInterest']);
 
-//edit page
+//order edit page
 Route::get('/orders/edit/{id}', [OrderController::class, 'edit']);
 Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
 
@@ -71,7 +72,7 @@ Route::get('/htetyus/delete/{id}', [HtetYuController::class, 'delete']);
 //interest delete
 Route::get('/interests/delete/{id}', [InterestController::class, 'delete']);
 
-//
+//rate
 Route::get('/rates/update', [RateController::class, 'index']);
 Route::post('/rates/update', [RateController::class, 'change']);
 
@@ -96,3 +97,8 @@ Route::post('/summaries/yearly', [SummaryController::class, 'yearlyCreate']);
 Route::get('/backups', [BackupController::class, 'index']);
 Route::post('/backups', [BackupController::class, 'store']);
 Route::get('/backups/delete/{id}', [BackupController::class, 'destory']);
+
+//village
+Route::get('/villages', [VillageController::class, 'index']);
+Route::post('/villages', [VillageController::class, 'store']);
+Route::get('/villages/destory/{id}', [VillageController::class, 'destory']);

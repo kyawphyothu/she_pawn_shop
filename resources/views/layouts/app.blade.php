@@ -57,6 +57,9 @@
                                 </ul>
                             </li>
                             <li class=" nav-item">
+                                <a href="/villages" class=" nav-link">Villages</a>
+                            </li>
+                            <li class=" nav-item">
                                 <a href="/backups" class=" nav-link">BackupDatabase</a>
                             </li>
                         </ul>
