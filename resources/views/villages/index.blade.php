@@ -37,7 +37,7 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $village->name }}</td>
                         <td>
-                            <a href='{{ url("/villages/destory/$village->id") }}' class=" btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href='{{ url("/villages/edit/$village->id") }}' class=" btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 @endforeach

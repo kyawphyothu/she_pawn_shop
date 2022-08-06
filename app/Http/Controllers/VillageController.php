@@ -33,10 +33,34 @@ class VillageController extends Controller
         return back()->with('success', 'New Village successfully Created!')->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
-    public function destory ($id)
-    {
-        Village::where('id', $id)->delete();
+    // public function destory ($id)
+    // {
+    //     Village::where('id', $id)->delete();
 
-        return back()->with('danger', 'Village Successfully Deleted!');
+    //     return back()->with('danger', 'Village Successfully Deleted!');
+    // }
+
+    public function edit ($id)
+    {
+        $village = Village::where('id', $id)->first();
+        return view('villages.edit', [
+            'village' => $village,
+        ]);
+    }
+
+    public function update (Request $request)
+    {
+        $validator = validator($request->all(), [
+            'name' => 'required',
+        ]);
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
+
+        $id = $request->id;
+        $name = $request->name;
+        Village::where('id', $id)->update(['name' => $name]);
+
+        return redirect('/villages')->with('info', 'Successfully Updated!');
     }
 }

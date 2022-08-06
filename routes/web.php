@@ -101,4 +101,5 @@ Route::get('/backups/delete/{id}', [BackupController::class, 'destory']);
 //village
 Route::get('/villages', [VillageController::class, 'index']);
 Route::post('/villages', [VillageController::class, 'store']);
-Route::get('/villages/destory/{id}', [VillageController::class, 'destory']);
+Route::get('/villages/edit/{id}', [VillageController::class, 'edit']);
+Route::post('/villages/update', [VillageController::class, 'update']);
