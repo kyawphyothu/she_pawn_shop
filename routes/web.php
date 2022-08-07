@@ -7,6 +7,7 @@ use App\Http\Controllers\InterestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\SummaryController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VillageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/test/{id}', [OrderController::class, 'test']);
 
 //index
-Route::get('/', [OrderController::class, 'index']);
+Route::get('/', [OrderController::class, 'index'])->name('root');
 Route::get('/orders/index', [OrderController::class, 'index']);
 
 //add order
@@ -103,3 +104,7 @@ Route::get('/villages', [VillageController::class, 'index']);
 Route::post('/villages', [VillageController::class, 'store']);
 Route::get('/villages/edit/{id}', [VillageController::class, 'edit']);
 Route::post('/villages/update', [VillageController::class, 'update']);
+
+//user
+Route::get('/user_info/edit', [UserController::class, 'edit'])->name('user_info.edit');
+Route::post('/user_info/update', [UserController::class, 'update'])->name('user_info.update');

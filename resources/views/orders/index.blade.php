@@ -3,11 +3,12 @@
 @section('content')
     <div class="container w-100">
         <div class="row">
-            @if (session('info'))
+            {{-- @if (session('info'))
                 <div class=" alert alert-info">
                     {{ session('info') }}
                 </div>
-            @endif
+            @endif --}}
+            @include('layouts.alert')
             <div class=" col-9">
                 {{-- SEARCH --}}
                 <form action="/orders/search" method="GET" class="mb-3">
