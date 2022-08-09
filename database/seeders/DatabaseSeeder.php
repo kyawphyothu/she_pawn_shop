@@ -34,11 +34,11 @@ class DatabaseSeeder extends Seeder
         // Order::factory(300)->create();
 
         //user
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@gmail.com',
+        //     'password' => Hash::make('password'),
+        // ]);
 
         //interest rate
         Rate::factory()->create([
