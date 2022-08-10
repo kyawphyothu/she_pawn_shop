@@ -22,18 +22,25 @@ class PermissionRoleSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'order view']);
-        Permission::create(['name' => 'user view']);
-        Permission::create(['name' => 'user manage']);
-        Permission::create(['name' => 'crud']);
+        Permission::create(['name' => 'order']);
+        Permission::create(['name' => 'history']);
+        Permission::create(['name' => 'summary']);
+        Permission::create(['name' => 'users']);
+        Permission::create(['name' => 'village']);
+        Permission::create(['name' => 'database backup']);
+        Permission::create(['name' => 'customer']);
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'customer']);
-        $role1->givePermissionTo('order view');
+        $role1->givePermissionTo('customer');
 
         $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('user view');
-        $role2->givePermissionTo('crud');
+        $role2->givePermissionTo('order');
+        $role2->givePermissionTo('history');
+        $role2->givePermissionTo('summary');
+        $role2->givePermissionTo('users');
+        $role2->givePermissionTo('village');
+        $role2->givePermissionTo('database backup');
 
         $role3 = Role::create(['name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider

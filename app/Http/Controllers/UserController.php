@@ -9,12 +9,40 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function index ()
+    {
+        $users = User::all();
+        return view('users.index', [
+            'users' => $users,
+        ]);
+    }
+
+    public function add ()
+    {
+        return view('users.add');
+    }
+
+    public function store ()
+    {
+
+    }
+
     public function edit ()
     {
         return view('users.edit');
     }
 
-    public function update (Request $request)
+    public function update ()
+    {
+
+    }
+
+    public function infoEdit ()
+    {
+        return view('users.infoedit');
+    }
+
+    public function infoUpdate (Request $request)
     {
         $validator = validator($request->all(),[
             'name' => 'required',

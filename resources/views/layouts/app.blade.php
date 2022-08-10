@@ -45,23 +45,27 @@
                             <li class=" nav-item">
                                 <a href="/" class=" nav-link">Home</a>
                             </li>
-                            <li class=" nav-item">
-                                <a href="/histories" class=" nav-link">History</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Summary</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/summaries/daily">Daily Summary</a></li>
-                                    <li><a class="dropdown-item" href="/summaries/monthly">Monthly Summary</a></li>
-                                    <li><a class="dropdown-item" href="/summaries/yearly">Yearly Summary</a></li>
-                                </ul>
-                            </li>
-                            <li class=" nav-item">
-                                <a href="/villages" class=" nav-link">Villages</a>
-                            </li>
-                            <li class=" nav-item">
-                                <a href="/backups" class=" nav-link">BackupDatabase</a>
-                            </li>
+                            @role('admin|Super-Admin')
+                                <li class=" nav-item">
+                                    <a href="/histories" class=" nav-link">History</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Summary</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/summaries/daily">Daily Summary</a></li>
+                                        <li><a class="dropdown-item" href="/summaries/monthly">Monthly Summary</a></li>
+                                        <li><a class="dropdown-item" href="/summaries/yearly">Yearly Summary</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="fa-solid fa-gear"></i> Setting</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/users">Users</a></li>
+                                        <li><a class="dropdown-item" href="/villages">Villages</a></li>
+                                        <li><a class="dropdown-item" href="/backups">BackupDatabase</a></li>
+                                    </ul>
+                                </li>
+                            @endrole
                         </ul>
                     @endauth
 
@@ -82,7 +86,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-primary" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>

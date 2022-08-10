@@ -9,20 +9,22 @@
                 </div>
             @endif --}}
             @include('layouts.alert')
-            <div class=" col-9">
-                {{-- SEARCH --}}
-                <form action="/orders/search" method="GET" class="mb-3">
-                    {{-- @csrf --}}
-                    <div class="input-group">
-                        <input type="search" class="form-control" placeholder="အမည်ဖြင့်ရှာရန်" name="q"
-                            style="border-right: 0;" required id="input"
-                            @if (isset($name)) value="{{ $name }}" @endif />
-                        {{-- <i class="fa-solid fa-xmark text-danger"></i> --}}
-                        <b id="clear" class="fa-solid fa-xmark text-danger input-group-text bg-light"
-                            style="border-left: 0; padding-top:10px; cursor: pointer;"></b>
-                        <input class="input-group-text" type="submit" value="Search">
-                    </div>
-                </form>
+            <div class=" @role('admin|Super-Admin') col-9 @else col-12 @endrole">
+                @role('admin|Super-Admin')
+                    {{-- SEARCH --}}
+                    <form action="/orders/search" method="GET" class="mb-3">
+                        {{-- @csrf --}}
+                        <div class="input-group">
+                            <input type="search" class="form-control" placeholder="အမည်ဖြင့်ရှာရန်" name="q"
+                                style="border-right: 0;" required id="input"
+                                @if (isset($name)) value="{{ $name }}" @endif />
+                            {{-- <i class="fa-solid fa-xmark text-danger"></i> --}}
+                            <b id="clear" class="fa-solid fa-xmark text-danger input-group-text bg-light"
+                                style="border-left: 0; padding-top:10px; cursor: pointer;"></b>
+                            <input class="input-group-text" type="submit" value="Search">
+                        </div>
+                    </form>
+                @endrole
                 {{-- nav --}}
                 {{-- <ul class=" nav nav-pills justify-content-center mb-3">
                     <li class="nav-item">
@@ -109,70 +111,72 @@
                     {{ $orders->withQueryString()->links() }}
                 </div>
             </div>
-            {{-- right --}}
-            <div class="col-3">
-                {{-- add new --}}
-                <a href="/orders/add" class=" btn btn-success btn-lg mb-2 w-100">အပေါင်ခံမည်</a>
-                {{-- rate and change rate --}}
-                <div class="mb-2">
-                    အောက်<span class="text-success"> {{ $rate4L }}</span>ကျပ်|
-                    အထက်<span class="text-success"> {{ $rate4G }}</span>ကျပ်|
-                    <span class="">
-                        <a href="/rates/update" class=" float-right btn btn-primary">Change Rate</a>
-                    </span>
-                </div>
-                {{-- filter --}}
-                <div class="card">
-                    <div class="card-header">
-                        <div class=" h4 text-primary">
-                            ရွေးထုတ်ရန်
+            @role('admin|Super-Admin')
+                {{-- right --}}
+                <div class="col-3">
+                    {{-- add new --}}
+                    <a href="/orders/add" class=" btn btn-success btn-lg mb-2 w-100">အပေါင်ခံမည်</a>
+                    {{-- rate and change rate --}}
+                    <div class="mb-2">
+                        အောက်<span class="text-success"> {{ $rate4L }}</span>ကျပ်|
+                        အထက်<span class="text-success"> {{ $rate4G }}</span>ကျပ်|
+                        <span class="">
+                            <a href="/rates/update" class=" float-right btn btn-primary">Change Rate</a>
+                        </span>
+                    </div>
+                    {{-- filter --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class=" h4 text-primary">
+                                ရွေးထုတ်ရန်
+                            </div>
+                        </div>
+                        <div class=" card-body">
+                            <form action="/orders/filter" method="GET">
+                                {{-- @csrf --}}
+                                @if (isset($name))
+                                    <input type="hidden" name="name" value="{{ $name }}">
+                                @endif
+                                <div class=" form-group mb-3">
+                                    <label for="location">နေရပ် <span class=" text-danger">*</span></label>
+                                    <select class="form-select form-control" name="location">
+                                        <option value="0">နေရပ်ရွေးရန်</option>
+                                        @foreach ($villages as $village)
+                                            <option value="{{ $village->id }}"
+                                                @if (isset($location)) @if ($location == $village->id)
+                                                    selected @endif
+                                                @endif>{{ $village->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small class=" text-muted">--မဖြစ်မနေရွေးပေးရန်--</small>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="">ပစ္စည်း အမျိုးအစား</label>
+                                    @foreach ($categories as $category)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="{{ $category->id }}"
+                                                name="category_id[]" value="{{ $category->id }}"
+                                                @if (isset($category_id_arr)) @if (in_array($category->id, $category_id_arr))
+                                                        checked @endif
+                                                @endif>
+                                            <label class="form-check-label"
+                                                for="{{ $category->id }}">{{ $category->name }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{-- <div class=" form-group mb-3">
+                                    <label for="">ယူငွေ</label>
+                                    <div class="input-group">
+                                        <input type="number" name="price" class=" form-control" min="1000">
+                                        <span class=" input-group-text">ကျပ်</span>
+                                    </div>
+                                </div> --}}
+                                <input type="submit" class=" btn btn-info" style="float: right;" value="Apply">
+                            </form>
                         </div>
                     </div>
-                    <div class=" card-body">
-                        <form action="/orders/filter" method="GET">
-                            {{-- @csrf --}}
-                            @if (isset($name))
-                                <input type="hidden" name="name" value="{{ $name }}">
-                            @endif
-                            <div class=" form-group mb-3">
-                                <label for="location">နေရပ် <span class=" text-danger">*</span></label>
-                                <select class="form-select form-control" name="location">
-                                    <option value="0">နေရပ်ရွေးရန်</option>
-                                    @foreach ($villages as $village)
-                                        <option value="{{ $village->id }}"
-                                            @if (isset($location)) @if ($location == $village->id)
-                                                selected @endif
-                                            @endif>{{ $village->name }}</option>
-                                    @endforeach
-                                </select>
-                                <small class=" text-muted">--မဖြစ်မနေရွေးပေးရန်--</small>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">ပစ္စည်း အမျိုးအစား</label>
-                                @foreach ($categories as $category)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="{{ $category->id }}"
-                                            name="category_id[]" value="{{ $category->id }}"
-                                            @if (isset($category_id_arr)) @if (in_array($category->id, $category_id_arr))
-                                                    checked @endif
-                                            @endif>
-                                        <label class="form-check-label"
-                                            for="{{ $category->id }}">{{ $category->name }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                            {{-- <div class=" form-group mb-3">
-                                <label for="">ယူငွေ</label>
-                                <div class="input-group">
-                                    <input type="number" name="price" class=" form-control" min="1000">
-                                    <span class=" input-group-text">ကျပ်</span>
-                                </div>
-                            </div> --}}
-                            <input type="submit" class=" btn btn-info" style="float: right;" value="Apply">
-                        </form>
-                    </div>
                 </div>
-            </div>
+            @endrole
         </div>
 
 
