@@ -37,9 +37,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [OrderController::class, 'index'])->name('home');
     Route::get('/orders/index', [OrderController::class, 'index']);
 
-    //detail page
-    Route::get('/orders/detail/{id}', [OrderController::class, 'detail']);
-
     Route::group(['middleware' => ['role:Super-Admin|admin']], function () {
 
         //test
@@ -55,6 +52,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/orders/filter', [OrderController::class, 'filter']);
         // Route::post('orders/search', [OrderController::class, 'searchByName']);
 
+        //detail page
+        Route::get('/orders/detail/{id}', [OrderController::class, 'detail']);
 
         //htet yu
         Route::get('/orders/htetyu/{id}', [OrderController::class, 'htetyu']);

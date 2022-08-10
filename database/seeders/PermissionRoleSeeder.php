@@ -54,8 +54,20 @@ class PermissionRoleSeeder extends Seeder
         $user->assignRole($role3);
 
         $user = \App\Models\User::factory()->create([
+            'name' => 'Aung Kyaw Nyunt',
+            'email' => 'aung@gmail.com',
+            'password' => Hash::make("password"),
+        ]);
+        $user->assignRole($role2);
+        $user = \App\Models\User::factory()->create([
+            'name' => 'Ohmar Win',
+            'email' => 'ohmar@gmail.com',
+            'password' => Hash::make("password"),
+        ]);
+        $user->assignRole($role2);
+        $user = \App\Models\User::factory()->create([
             'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'Chan Nyein Thu@gmail.com',
             'password' => Hash::make("password"),
         ]);
         $user->assignRole($role2);
