@@ -1,6 +1,150 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:700);
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f0f0;
+} */
+.box {
+  position: relative;
+  /* max-width: 600px;
+  width: 90%;
+  height: 400px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,.1); */
+}
+
+/* common */
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+}
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid #b92929;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 15px 0;
+  background-color: #db3434;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  font: 700 18px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* top left*/
+.ribbon-top-left {
+  top: -10px;
+  left: -10px;
+}
+.ribbon-top-left::before,
+.ribbon-top-left::after {
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+.ribbon-top-left::before {
+  top: 0;
+  right: 0;
+}
+.ribbon-top-left::after {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-top-left span {
+  right: -25px;
+  top: 30px;
+  transform: rotate(-45deg);
+}
+
+/* top right*/
+.ribbon-top-right {
+  top: -10px;
+  right: -10px;
+}
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-top-right::before {
+  top: 0;
+  left: 0;
+}
+.ribbon-top-right::after {
+  bottom: 0;
+  right: 0;
+}
+.ribbon-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+
+/* bottom left*/
+.ribbon-bottom-left {
+  bottom: -10px;
+  left: -10px;
+}
+.ribbon-bottom-left::before,
+.ribbon-bottom-left::after {
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.ribbon-bottom-left::before {
+  bottom: 0;
+  right: 0;
+}
+.ribbon-bottom-left::after {
+  top: 0;
+  left: 0;
+}
+.ribbon-bottom-left span {
+  right: -25px;
+  bottom: 30px;
+  transform: rotate(225deg);
+}
+
+/* bottom right*/
+.ribbon-bottom-right {
+  bottom: -10px;
+  right: -10px;
+}
+.ribbon-bottom-right::before,
+.ribbon-bottom-right::after {
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-bottom-right::before {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-bottom-right::after {
+  top: 0;
+  right: 0;
+}
+.ribbon-bottom-right span {
+  left: -25px;
+  bottom: 30px;
+  transform: rotate(-225deg);
+}
+</style>
     <div class="container w-100">
         <div class="row">
             {{-- @if (session('info'))
@@ -41,8 +185,11 @@
                 <div class="row mt-5">
                     @foreach ($orders as $order)
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column mb-4">
-                            <div class="card d-flex flex-fill"
+                            <div class="card d-flex flex-fill box"
                                 @if ($order->pawn_id == 2) style="background-color: #d5d4d4bd;" @endif>
+                                @if ($order->pawn_id == 2)
+                                    <div class="ribbon ribbon-top-right"><span style="user-select: none">ရွေးပြီး</span></div>
+                                @endif
                                 <div class="card-body">
                                     <div class=" card-title h5">
                                         <span class=" text-primary">{{ $order->name }}</span> {{-- //name --}}
@@ -97,7 +244,9 @@
                                                 if ($now >= $timeOut) {
                                                     echo $order->created_at;
                                                 } else {
+                                                    $dayAndHour = date('D H:m', strtotime($order->created_at));
                                                     echo $order->created_at->diffForHumans(); //date
+                                                    echo " ($dayAndHour)";
                                                 }
                                             @endphp
                                         </small>
@@ -149,6 +298,17 @@
                                         @endforeach
                                     </select>
                                     <small class=" text-muted">--မဖြစ်မနေရွေးပေးရန်--</small>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="">ယူငွေ</label>
+                                    <div class="row">
+                                        <div class=" col-6">
+                                            <input type="number" class=" form-control" placeholder="From">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" class="form-control" placeholder="To">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="">ပစ္စည်း အမျိုးအစား</label>

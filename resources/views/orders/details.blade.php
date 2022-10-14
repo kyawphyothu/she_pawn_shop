@@ -44,11 +44,11 @@
                                 $time = $order->created_at;
                                 $timeOut = $time->modify('+6 days')->format('Y-m-d H:i:s');
                                 $now = date('Y-m-d H:i:s');
-                                if ($now >= $timeOut) {
-                                    echo $order->created_at;
-                                } else {
-                                    echo $order->created_at->diffForHumans(); //DATE
-                                }
+                                echo $order->created_at;
+                                echo " ( " .$order->created_at->diffForHumans() . " )"; //DATE
+                                // if ($now >= $timeOut) {
+                                // } else {
+                                // }
                             @endphp
                         </small><br>
                         <small class=" text-primary">
