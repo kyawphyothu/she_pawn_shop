@@ -299,7 +299,7 @@
                                     </select>
                                     <small class=" text-muted">--မဖြစ်မနေရွေးပေးရန်--</small>
                                 </div>
-                                <div class="form-group mb-3">
+                                {{-- <div class="form-group mb-3">
                                     <label for="">ယူငွေ</label>
                                     <div class="row">
                                         <div class=" col-6">
@@ -309,7 +309,7 @@
                                             <input type="number" class="form-control" placeholder="To">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group mb-3">
                                     <label for="">ပစ္စည်း အမျိုးအစား</label>
                                     @foreach ($categories as $category)
