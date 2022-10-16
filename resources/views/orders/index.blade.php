@@ -204,11 +204,11 @@
                                     </div>
                                     <div class=" text-muted">
                                         <b>{{ floor($order->weight / 128) }}</b> {{-- အလေးချိန် --}}
-                                        ကျပ်သား
+                                        ကျပ်သား &nbsp;
                                         <b>{{ floor(($order->weight % 128) / 8) }}</b>
-                                        ပဲ
+                                        ပဲ &nbsp;
                                         <b>{{ ($order->weight % 128) % 8 }}</b>
-                                        မူး
+                                        မူး &nbsp;
                                     </div>
                                     <div class=" text-success">
                                         <b>

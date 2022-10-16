@@ -213,7 +213,11 @@ class OrderController extends Controller
         $history->updated_at = $created_at;
         $history->save();
 
-        return redirect('/');
+        if(request()->action == 'အပေါင်လက်ခံမည်'){
+            return redirect('/');
+        }else if(request()->action == 'ဆက်တိုက်အပေါင်လက်ခံမည်'){
+            return back();
+        }
     }
 
     //detail page

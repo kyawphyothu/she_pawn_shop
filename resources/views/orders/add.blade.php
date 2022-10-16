@@ -134,7 +134,8 @@
                     </div>
 
                     <div class="form-group float-end">
-                        <input type="submit" value="အပေါင်လက်ခံမည်" class="btn btn-success">
+                        <input type="submit" name="action" value="ဆက်တိုက်အပေါင်လက်ခံမည်" class="btn btn-primary mb-2">
+                        <input type="submit" name="action" value="အပေါင်လက်ခံမည်" class="btn btn-success mb-2">
                         <a href="/" class="btn btn-outline-secondary">မလုပ်တော့ပါ</a>
                     </div>
                 </form>
