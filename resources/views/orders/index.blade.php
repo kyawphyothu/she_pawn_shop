@@ -152,7 +152,13 @@
                     {{ session('info') }}
                 </div>
             @endif --}}
-            @include('layouts.alert')
+            @if (session('info'))
+                <div class=" alert alert-success user-select-none">
+                    {{ session('info') }}
+                    <i class="fa-solid fa-xmark float-end text-danger close-btn" onclick="this.parentElement.style.display = 'none';"></i>
+                </div>
+            @endif
+            {{-- @include('layouts.alert') --}}
             <div class=" @role('admin|Super-Admin') col-9 @else col-12 @endrole">
                 @role('admin|Super-Admin')
                     {{-- SEARCH --}}

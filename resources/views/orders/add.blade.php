@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        @if (session('info'))
+            <div class=" alert alert-success user-select-none">
+                {{ session('info') }}
+                <i class="fa-solid fa-xmark float-end text-danger close-btn" onclick="this.parentElement.style.display = 'none';"></i>
+            </div>
+        @endif
         <div class="h2 text-bold text-primary mb-3">အပေါင်ခံမည်</div>
         <div class="card">
             <div class="card-body">
@@ -142,4 +148,5 @@
             </div>
         </div>
     </div>
+
 @endsection
