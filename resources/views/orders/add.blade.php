@@ -112,7 +112,7 @@
                         <label for="location">လက်ခံသူ</label>
                         <select class="form-select form-control" name="owner_id">
                             @foreach ($owners as $owner)
-                                <option value="{{ $owner->id }}" @if (old('owner_id') == $owner->id) selected @endif>
+                                <option value="{{ $owner->id }}" @if (old('owner_id') == $owner->id || (session('continuous_order_owner') && session('continuous_order_owner') == $owner->id)) selected @endif>
                                     {{ $owner->name }}
                                 </option>
                             @endforeach

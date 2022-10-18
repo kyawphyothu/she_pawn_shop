@@ -216,7 +216,7 @@ class OrderController extends Controller
         if(request()->action == 'အပေါင်လက်ခံမည်'){
             return redirect('/')->with('info', "စာရင်းသွင်းခြင်းအောင်မြင်ပါသည်။");
         }else if(request()->action == 'ဆက်တိုက်အပေါင်လက်ခံမည်'){
-            return back()->with('info', "စာရင်းသွင်းခြင်းအောင်မြင်ပါသည်။");
+            return back()->with('info', "စာရင်းသွင်းခြင်းအောင်မြင်ပါသည်။")->with('continuous_order_owner', $owner_id);
         }
     }
 
