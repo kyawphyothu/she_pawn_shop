@@ -192,7 +192,7 @@
                     </li>
                 </ul> --}}
                 {{-- contents --}}
-                <div class=" d-flex justify-content-around mt-3">
+                <div class=" d-flex justify-content-around mt-4">
                     <input type="text" value="@if(isset($SearchAllOrNot)){{ $SearchAllOrNot }}@endif" hidden name="allOrNot">
                     <input type="submit" value="အားလုံး" name="allOrNot" class=" btn btn-outline-primary">
                     <input type="submit" value="မရွေးရသေး" name="allOrNot" class=" btn btn-outline-success">
@@ -202,7 +202,7 @@
                     {{-- <a href="#" class=" link-info">မရွေးရသေး</a>
                     <a href="#" class=" link-danger">ရွေးပြီး</a> --}}
                 </div>
-                <div class="row mt-5">
+                <div class="row mt-3">
                     @if ($orders[0] == null)
                         <div class=" text-danger">
                             <h1>
