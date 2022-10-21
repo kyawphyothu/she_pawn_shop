@@ -161,11 +161,14 @@
             @endif
             {{-- @include('layouts.alert') --}}
             <div class=" @role('admin|Super-Admin') col-9 @else col-12 @endrole">
+                <small class=" text-muted" style="font-size: 11.5px">
+                    --search mode မှထွက်၍ မူလစာမျက်နှာသို့ရောက်လိုလျှင် သျှီအပေါင်ဆိုင် ဆိုသည့်စာသားအားနှိပ်ပါ။--
+                </small>
                 @role('admin|Super-Admin')
                     {{-- SEARCH --}}
                     {{-- <form action="/orders/search" method="GET" class="mb-3"> --}}
                         {{-- @csrf --}}
-                        <div class="input-group">
+                        <div class="input-group mt-2">
                             <input type="search" class="form-control" placeholder="အမည်ဖြင့်ရှာရန်" name="name"
                                 style="border-right: 0;" id="input"
                                 @if (isset($name)) value="{{ $name }}" @endif />
