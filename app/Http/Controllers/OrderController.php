@@ -96,6 +96,9 @@ class OrderController extends Controller
             }elseif($request->allOrNot == 'ရွေးပြီး'){
                 $orders->where('pawn_id', 2);
             }
+            $SearchAllOrNot = $request->allOrNot;
+        }else{
+            $SearchAllOrNot = 'အားလုံး';
         }
 
         //ဈေးနဲ့ရှာတာမထည့်ထားသေးဘူး
@@ -119,6 +122,7 @@ class OrderController extends Controller
             'category_id_arr' => $request->category_id,
             'rate4L' => $rate4L,
             'rate4G' => $rate4G,
+            'SearchAllOrNot' => $SearchAllOrNot,
         ]);
     }
 

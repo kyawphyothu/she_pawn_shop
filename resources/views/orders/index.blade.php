@@ -190,7 +190,8 @@
                 </ul> --}}
                 {{-- contents --}}
                 <div class=" d-flex justify-content-around mt-3">
-                    <input type="submit" value="အားလုံး" name="allOrNot" class=" btn btn-outline-primary" selected>
+                    <input type="text" value="@if(isset($SearchAllOrNot)){{ $SearchAllOrNot }}@endif" hidden name="allOrNot">
+                    <input type="submit" value="အားလုံး" name="allOrNot" class=" btn btn-outline-primary">
                     <input type="submit" value="မရွေးရသေး" name="allOrNot" class=" btn btn-outline-success">
                     <input type="submit" value="ရွေးပြီး" name="allOrNot" class=" btn btn-outline-danger">
                     {{-- <button type="submit" class="link-dark">all</button> --}}
