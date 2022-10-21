@@ -88,6 +88,15 @@ class OrderController extends Controller
         if ($request->location && $request->location > 0) {
             $orders->where('village_id', $request->location);
         }
+        if($request->allOrNot){
+            if($request->allOrNot == 'အားလုံး'){
+                $orders->whereBetween('pawn_id',[1,2]);
+            }elseif($request->allOrNot == 'မရွေးရသေး'){
+                $orders->where('pawn_id', 1);
+            }elseif($request->allOrNot == 'ရွေးပြီး'){
+                $orders->where('pawn_id', 2);
+            }
+        }
 
         //ဈေးနဲ့ရှာတာမထည့်ထားသေးဘူး
         // if($request->price){

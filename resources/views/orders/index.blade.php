@@ -145,6 +145,7 @@
   transform: rotate(-225deg);
 }
 </style>
+<form action="/orders/filter" method="GET">
     <div class="container w-100">
         <div class="row">
             {{-- @if (session('info'))
@@ -162,18 +163,18 @@
             <div class=" @role('admin|Super-Admin') col-9 @else col-12 @endrole">
                 @role('admin|Super-Admin')
                     {{-- SEARCH --}}
-                    <form action="/orders/search" method="GET" class="mb-3">
+                    {{-- <form action="/orders/search" method="GET" class="mb-3"> --}}
                         {{-- @csrf --}}
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="အမည်ဖြင့်ရှာရန်" name="q"
-                                style="border-right: 0;" required id="input"
+                            <input type="search" class="form-control" placeholder="အမည်ဖြင့်ရှာရန်" name="name"
+                                style="border-right: 0;" id="input"
                                 @if (isset($name)) value="{{ $name }}" @endif />
                             {{-- <i class="fa-solid fa-xmark text-danger"></i> --}}
                             <b id="clear" class="fa-solid fa-xmark text-danger input-group-text bg-light"
                                 style="border-left: 0; padding-top:10px; cursor: pointer;"></b>
                             <input class="input-group-text" type="submit" value="Search">
                         </div>
-                    </form>
+                    {{-- </form> --}}
                 @endrole
                 {{-- nav --}}
                 {{-- <ul class=" nav nav-pills justify-content-center mb-3">
@@ -188,7 +189,23 @@
                     </li>
                 </ul> --}}
                 {{-- contents --}}
+                <div class=" d-flex justify-content-around mt-3">
+                    <input type="submit" value="အားလုံး" name="allOrNot" class=" btn btn-outline-primary" selected>
+                    <input type="submit" value="မရွေးရသေး" name="allOrNot" class=" btn btn-outline-success">
+                    <input type="submit" value="ရွေးပြီး" name="allOrNot" class=" btn btn-outline-danger">
+                    {{-- <button type="submit" class="link-dark">all</button> --}}
+                    {{-- <div type="submit" class=" link-dark">all</div> --}}
+                    {{-- <a href="#" class=" link-info">မရွေးရသေး</a>
+                    <a href="#" class=" link-danger">ရွေးပြီး</a> --}}
+                </div>
                 <div class="row mt-5">
+                    @if ($orders[0] == null)
+                        <div class=" text-danger">
+                            <h1>
+                                ရှာဖွေနေသော ရလဒ်မရှိပါ
+                            </h1>
+                        </div>
+                    @endif
                     @foreach ($orders as $order)
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column mb-4">
                             <div class="card d-flex flex-fill box"
@@ -287,11 +304,10 @@
                             </div>
                         </div>
                         <div class=" card-body">
-                            <form action="/orders/filter" method="GET">
                                 {{-- @csrf --}}
-                                @if (isset($name))
+                                {{-- @if (isset($name))
                                     <input type="hidden" name="name" value="{{ $name }}">
-                                @endif
+                                @endif --}}
                                 <div class=" form-group mb-3">
                                     <label for="location">နေရပ် <span class=" text-danger">*</span></label>
                                     <select class="form-select form-control" name="location">
@@ -338,13 +354,13 @@
                                     </div>
                                 </div> --}}
                                 <input type="submit" class=" btn btn-info" style="float: right;" value="Apply">
-                            </form>
+                            </div>
                         </div>
                     </div>
+                    @endrole
                 </div>
-            @endrole
-        </div>
 
 
-    </div>
+            </div>
+</form>
 @endsection
