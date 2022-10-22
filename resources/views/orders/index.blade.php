@@ -161,9 +161,11 @@
             @endif
             {{-- @include('layouts.alert') --}}
             <div class=" @role('admin|Super-Admin') col-9 @else col-12 @endrole">
-                <small class=" text-muted" style="font-size: 11.5px">
-                    --search mode မှထွက်၍ မူလစာမျက်နှာသို့ရောက်လိုလျှင် သျှီအပေါင်ဆိုင် ဆိုသည့်စာသားအားနှိပ်ပါ။--
-                </small>
+                @if ( request()->is('orders/filter*') )
+                    <small class=" text-muted" style="font-size: 11.5px">
+                        --search mode မှထွက်၍ မူလစာမျက်နှာသို့ရောက်လိုလျှင် သျှီအပေါင်ဆိုင် ဆိုသည့်စာသားအားနှိပ်ပါ။--
+                    </small>
+                @endif
                 @role('admin|Super-Admin')
                     {{-- SEARCH --}}
                     {{-- <form action="/orders/search" method="GET" class="mb-3"> --}}
