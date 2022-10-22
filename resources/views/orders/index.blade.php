@@ -196,9 +196,9 @@
                 {{-- contents --}}
                 <div class=" d-flex justify-content-around mt-4">
                     <input type="text" value="@if(isset($SearchAllOrNot)){{ $SearchAllOrNot }}@endif" hidden name="allOrNot">
-                    <input type="submit" value="အားလုံး" name="allOrNot" class=" btn btn-outline-primary">
-                    <input type="submit" value="မရွေးရသေး" name="allOrNot" class=" btn btn-outline-success">
-                    <input type="submit" value="ရွေးပြီး" name="allOrNot" class=" btn btn-outline-danger">
+                    <input type="submit" value="အားလုံး" name="allOrNot" class=" btn @if( ( isset($SearchAllOrNot) && $SearchAllOrNot == 'အားလုံး' ) || !isset($SearchAllOrNot) ) btn-primary @else btn-outline-primary @endif">
+                    <input type="submit" value="မရွေးရသေး" name="allOrNot" class=" btn @if( isset($SearchAllOrNot) && $SearchAllOrNot == 'မရွေးရသေး' ) btn-success @else btn-outline-success @endif">
+                    <input type="submit" value="ရွေးပြီး" name="allOrNot" class=" btn @if( isset($SearchAllOrNot) && $SearchAllOrNot == 'ရွေးပြီး' ) btn-danger @else btn-outline-danger @endif">
                     {{-- <button type="submit" class="link-dark">all</button> --}}
                     {{-- <div type="submit" class=" link-dark">all</div> --}}
                     {{-- <a href="#" class=" link-info">မရွေးရသေး</a>
