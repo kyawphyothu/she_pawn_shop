@@ -805,4 +805,16 @@ class OrderController extends Controller
 
         return redirect("/orders/detail/$id");
     }
+
+    public function delete($id)
+    {
+        Order::where('id', $id)->delete();
+        Eduction::where('order_id', $id)->delete();
+        History::where('order_id', $id)->delete();
+        HtetYu::where('order_id', $id)->delete();
+        Interest::where('order_id', $id)->delete();
+        OrderCategory::where('order_id', $id)->delete();
+
+        return redirect('/')->with('info', "အပေါင်စာရင်းအား ဖျက်သိမ်ခြင်း အောင်မြင်ပါသည်။");
+    }
 }

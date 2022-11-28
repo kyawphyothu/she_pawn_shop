@@ -54,7 +54,10 @@
                         <small class=" text-primary">
                             {{ $order->owner->name }} {{-- owner_name --}}
                         </small>
-                        <a href="/orders/edit/{{ $order->id }}" class="btn btn-outline-primary float-end">Edit</a>
+                        <div class="float-end">
+                            <a href="/orders/edit/{{ $order->id }}" class="btn btn-outline-primary ">Edit</a>
+                            <a href="/orders/delete/{{ $order->id }}" class="btn btn-outline-danger" onclick="return confirm('ယခု အပေါင်ထားမှုကို ဖျက်ပစ်ဖြစ်သည်။ သေချာပါသလား?')">Delete!</a>
+                        </div>
                     </div>
                     <div class="card-footer">
                         @if ($order->note && $order->note != 'မှတ်ချက်မရှိသေးပါ')

@@ -67,6 +67,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/orders/edit/{id}', [OrderController::class, 'edit']);
         Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
 
+        //order delete
+        Route::get('/orders/delete/{id}', [OrderController::class, 'delete']);
+
         //eduction page
         Route::get('/orders/eduction/{id}', [OrderController::class, 'eduction']);
         Route::post('/orders/eduction/{id}', [OrderController::class, 'educt']);
