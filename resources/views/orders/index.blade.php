@@ -230,9 +230,9 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class=" form-group mb-3 mt-2">
-                                            {{-- <label for="location" style="font-size: 12px;">နေရပ် <span class=" text-danger">*</span></label> --}}
+                                            <label for="location" style="font-size: 12px;">နေရပ် ဖြင့်စစ်ထုတ်ရန်</label>
                                             <select class="form-select form-select-sm" id="mobile-view-location-filter" name="">
-                                                <option value="0">နေရပ်ရွေးရန်</option>
+                                                <option value="0">All Villages</option>
                                                 @foreach ($villages as $village)
                                                     <option value="{{ $village->id }}"
                                                         @if (isset($location)) @if ($location == $village->id)
@@ -396,7 +396,7 @@
                                 <div class=" form-group mb-3">
                                     <label for="location">နေရပ် <span class=" text-danger">*</span></label>
                                     <select class="form-select form-control" name="location" id="location">
-                                        <option value="0">နေရပ်ရွေးရန်</option>
+                                        <option value="0">All Villages</option>
                                         @foreach ($villages as $village)
                                             <option value="{{ $village->id }}"
                                                 @if (isset($location)) @if ($location == $village->id)
