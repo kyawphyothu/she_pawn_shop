@@ -175,3 +175,15 @@
         </div>
     </div>
 @endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            let price  = document.querySelector("[name='price']")
+            let interest = document.querySelector("[name='interest']");
+            let total = document.querySelector("[name='total']");
+            interest.addEventListener('keyup', function(){
+                total.value = Number(price.value) + Number(interest.value);
+            })
+        })
+    </script>
+@endsection
