@@ -169,6 +169,9 @@
         .mobile-view{
             display: none;
         }
+        .add_order_mobile_view{
+            display: none;
+        }
         @media(max-width: 1000px) {
             .right {
                 display: none;
@@ -183,11 +186,24 @@
             .mobile-view{
                 display: flex;
             }
+            .add_order_mobile_view{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                /* background: red; */
+                position: fixed;
+                bottom: 15px;
+                right: 15px;
+                box-shadow: 5px 3px 5px #888888;
+            }
         }
     </style>
     <form action="/orders/filter" method="GET">
         <div class="container w-100">
-            <div class="row">
+            <div class="row" >
                 {{-- @if (session('info'))
                     <div class=" alert alert-info">
                         {{ session('info') }}
@@ -202,11 +218,6 @@
                 @endif
                 {{-- @include('layouts.alert') --}}
                 <div class=" @role('admin|Super-Admin') col-9 @else col-12 @endrole left">
-                    <a href="/orders/add" class="btn btn-success btn-sm mb-2 w-25 justify-content-center small-screen">
-                        <small>
-                            အပေါင်ခံမည်
-                        </small>
-                    </a>
                     @if (request()->is('orders/filter*'))
                         <small class=" text-muted" style="font-size: 11.5px">
                             --search mode မှထွက်၍ မူလစာမျက်နှာသို့ရောက်လိုလျှင် သျှီအပေါင်ဆိုင် ဆိုသည့်စာသားအားနှိပ်ပါ။--
@@ -263,7 +274,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">ရွေးပြီးသား ပစ္စည်းများ</a>
                     </li>
-                </ul> --}}
+                    </ul> --}}
                     {{-- contents --}}
                     <div class=" d-flex justify-content-around mt-4">
                         {{-- <input type="text" value="@if (isset($SearchAllOrNot)) {{ $SearchAllOrNot }} @endif" hidden
@@ -367,6 +378,11 @@
                         @endforeach
                         {{ $orders->withQueryString()->links('vendor.pagination.custom') }}
                     </div>
+                    {{-- add new for mobile view --}}
+                    <a href="/orders/add" class="add_order_mobile_view btn btn-primary">
+                        {{-- <i class="fa-solid fa-file-circle-plus" style="font-size: 30px"></i> --}}
+                        <i class="fa-solid fa-plus" style="font-size: 25px"></i>
+                    </a>
                 </div>
                 @role('admin|Super-Admin')
                     {{-- right --}}
@@ -443,8 +459,7 @@
                     </div>
                 @endrole
             </div>
-
-
+            <div class="some_space" style="height: 30px"></div>
         </div>
     </form>
 
